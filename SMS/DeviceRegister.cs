@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+//Test asd
 namespace SMS
 {
     public partial class DeviceRegister : Form
@@ -114,7 +114,7 @@ namespace SMS
         {
             LoadDevices();
         }
-        //Test
+        
         private void SaveButton_Click(object sender, EventArgs e)
         {
             string newRecord = DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split(':')[0] + ":" + selectedDeviceIdWithImei.Split(':')[1];
