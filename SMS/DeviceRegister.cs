@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//Test qwe
+//Test zx
 namespace SMS
 {
     public partial class DeviceRegister : Form
