@@ -189,8 +189,7 @@ namespace SMS
                     }
                 }
             }
-            catch { }
-
+            catch { } 
         }
 
         private void sendSMSToolStripMenuItem_Click(object sender, EventArgs e)
