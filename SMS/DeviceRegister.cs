@@ -114,7 +114,7 @@ namespace SMS
         {
             LoadDevices();
         }
-
+        //Test
         private void SaveButton_Click(object sender, EventArgs e)
         {
             string newRecord = DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split(':')[0] + ":" + selectedDeviceIdWithImei.Split(':')[1];
@@ -125,7 +125,7 @@ namespace SMS
                 LineChanger(newRecord, vars.savedDevicesPath, oldRecord);
             }
             else
-            {
+                {
                 LineChanger(newRecord, vars.savedDevicesPath, "");
             }
             selectedDeviceOldName = "";
@@ -149,14 +149,14 @@ namespace SMS
                 if (oldText != "") newLines.Remove(oldText);
                 File.Delete(fileName);
                 using (StreamWriter writer = new StreamWriter(fileName))
-                {
+                    {
                     foreach (string line in newLines)
                     { writer.WriteLine(line); MessageBox.Show(line); }
                     writer.Close();
+                    }
                 }
-            }
 
-        }
+            }
         private int LineNumberFinder(string record)
         {
             int counter = 0;
@@ -168,7 +168,7 @@ namespace SMS
                 if (line.Contains(record))
                 {
                     Console.WriteLine(counter.ToString() + ": " + line); return counter;
-                }
+        }
 
                 counter++;
             }
@@ -193,6 +193,6 @@ namespace SMS
             }
             catch { }
 
-        }
+        } 
     }
 }
