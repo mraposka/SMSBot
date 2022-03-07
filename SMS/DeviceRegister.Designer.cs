@@ -55,6 +55,7 @@
             this.sendSMSToolStripMenuItem.Name = "sendSMSToolStripMenuItem";
             this.sendSMSToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.sendSMSToolStripMenuItem.Text = "Send SMS";
+            this.sendSMSToolStripMenuItem.Click += new System.EventHandler(this.sendSMSToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -130,8 +131,11 @@
             this.Controls.Add(this.DeviceNameText);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "DeviceRegister";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Device Registration";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DeviceRegister_FormClosing);
             this.Load += new System.EventHandler(this.DeviceRegister_Load);

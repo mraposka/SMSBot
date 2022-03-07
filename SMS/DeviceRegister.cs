@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//Test zx
+
 namespace SMS
 {
     public partial class DeviceRegister : Form
@@ -21,6 +21,7 @@ namespace SMS
         Process imeiProcess = new Process();
         string selectedDeviceIdWithImei = "";
         string selectedDeviceOldName = "";
+        bool changingPage = false;
         public DeviceRegister()
         {
             InitializeComponent();
@@ -84,7 +85,6 @@ namespace SMS
                     DeviceListbox.Items.Add(device);
                 }
                 //listing devices
-
             }
             catch { }
         }
@@ -100,21 +100,19 @@ namespace SMS
 
         private void DeviceRegister_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
+            if (!changingPage)
             {
-                Process[] runingProcess = Process.GetProcessesByName("SMS");
-                for (int i = 0; i < runingProcess.Length; i++)
-                {
-                    runingProcess[i].Kill();
-                }
+                this.Hide();
+                MainPage mainPage = new MainPage();
+                mainPage.Show();
             }
-            catch { }
+            else { changingPage = false; }
         }
         private void RefreshButton_Click(object sender, EventArgs e)
         {
             LoadDevices();
         }
-        
+
         private void SaveButton_Click(object sender, EventArgs e)
         {
             string newRecord = DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split(':')[0] + ":" + selectedDeviceIdWithImei.Split(':')[1];
@@ -125,7 +123,7 @@ namespace SMS
                 LineChanger(newRecord, vars.savedDevicesPath, oldRecord);
             }
             else
-                {
+            {
                 LineChanger(newRecord, vars.savedDevicesPath, "");
             }
             selectedDeviceOldName = "";
@@ -149,31 +147,31 @@ namespace SMS
                 if (oldText != "") newLines.Remove(oldText);
                 File.Delete(fileName);
                 using (StreamWriter writer = new StreamWriter(fileName))
-                    {
+                {
                     foreach (string line in newLines)
-                    { writer.WriteLine(line); MessageBox.Show(line); }
+                    { writer.WriteLine(line.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "")); MessageBox.Show(line); }
                     writer.Close();
+                }
+            }
+            var tempFileName = Path.GetTempFileName();
+            try
+            {
+                using (var streamReader = new StreamReader(vars.savedDevicesPath))
+                using (var streamWriter = new StreamWriter(tempFileName))
+                {
+                    string line;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(line))
+                            streamWriter.WriteLine(line);
                     }
                 }
-
+                File.Copy(tempFileName, vars.savedDevicesPath.Split('\\').Last(), true);
             }
-        private int LineNumberFinder(string record)
-        {
-            int counter = 0;
-            string line;
-            StreamReader file = new StreamReader(vars.savedDevicesPath);
-            while ((line = file.ReadLine()) != null)
+            finally
             {
-
-                if (line.Contains(record))
-                {
-                    Console.WriteLine(counter.ToString() + ": " + line); return counter;
-        }
-
-                counter++;
+                File.Delete(tempFileName);
             }
-            file.Close();
-            return -1;
         }
         private void DeviceListbox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -193,6 +191,14 @@ namespace SMS
             }
             catch { }
 
-        } 
+        }
+
+        private void sendSMSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            changingPage = true;
+            MainPage mainPage = new MainPage();
+            mainPage.Show();
+        }
     }
 }

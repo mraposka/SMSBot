@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SMS
 { 
     class Variables
     {
+        public void s(object x)
+        {
+            MessageBox.Show(x.ToString());
+        }
         private string _adbPath = @"C:\Users\Win\Desktop\sdk\platform-tools\adb.exe";
         public static string _imeiBatPath = @"getimei.bat";
         string _imeisTxtPath = @"imeis.txt";

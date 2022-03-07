@@ -101,11 +101,15 @@ namespace SMS
 
         private void MainPage_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Process[] runingProcess = Process.GetProcessesByName("SMS");
-            for (int i = 0; i < runingProcess.Length; i++)
+            try
             {
-                runingProcess[i].Kill();
+                Process[] runingProcess = Process.GetProcessesByName("SMS");
+                for (int i = 0; i < runingProcess.Length; i++)
+                {
+                   runingProcess[i].Kill(); 
+                }
             }
+            catch { }
         }
          
         private void pictureBox1_Click(object sender, EventArgs e)
