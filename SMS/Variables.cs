@@ -14,6 +14,7 @@ namespace SMS
             MessageBox.Show(x.ToString());
         }
         private string _adbPath = @"C:\Users\Win\Desktop\sdk\platform-tools\adb.exe";
+        private string savedNumbersPath = @"savedNumbers.txt";
         public static string _imeiBatPath = @"getimei.bat";
         string _imeisTxtPath = @"imeis.txt";
         public string _savedDevicesPath = @"devices.txt";
@@ -43,6 +44,13 @@ namespace SMS
             get
             {
                 return _savedDevicesPath;
+            }
+        }
+        public string savedNumbersPath
+        {
+            get
+            {
+                return _savedNumbersPath;
             }
         }
     }

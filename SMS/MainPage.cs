@@ -47,24 +47,24 @@ namespace SMS
             }
             if (deviceControl)
             {
-                label8.Text = "OK";
-                button2.Enabled = true;
-                button3.Enabled = true;
-                button4.Enabled = true;
+                StatusLabel.Text = "OK";
+                Message_SendNowButton.Enabled = true;
+                Message_SendAllButton.Enabled = true;
+                Message_SendSelectedButton.Enabled = true;
                 for (int i = 0; i < lines.Length; i++)
                 {
                     if (!String.IsNullOrEmpty(lines[i]))
                     {
-                        listBox1.Items.Add(lines[i]);
+                        DevicesListBox.Items.Add(lines[i]);
                     }
                 }
             }
             else
             {
-                label8.Text = "Update ids";
-                button2.Enabled = false;
-                button3.Enabled = false;
-                button4.Enabled = false;
+                StatusLabel.Text = "Update Device Properties";
+                Message_SendNowButton.Enabled = false;
+                Message_SendAllButton.Enabled = false;
+                Message_SendSelectedButton.Enabled = false;
             }
         }
         private bool CheckDeviceId(string imei, string id)
@@ -114,8 +114,34 @@ namespace SMS
          
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
+            DevicesListBox.Items.Clear();
             AllDeviceStatusCheck();
+        }
+
+        private void Number_AddToListButton_Click(object sender, EventArgs e)
+        {
+            NumbersListBox.Items.Add(NumberText.Text);
+            using (StreamWriter streamWriter=new StreamWriter(vars.savedNumbersPath))
+            {
+                streamWriter.WriteLine(NumberText.Text);
+                streamWriter.Close();
+            }
+        }
+
+        private void DeleteSelectedNumberButton_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void NumbersListBox_DoubleClick(object sender, EventArgs e)
+        {
+            string itemToDel=NumbersListBox.SelectedItem.ToString();
+            NumbersListBox.Items.Remove(itemToDel);
+            using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
+            {
+                //delete?
+                streamWriter.Close();
+            }
         }
     }
 }
