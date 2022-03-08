@@ -14,12 +14,12 @@ namespace SMS
 {
     public partial class MainPage : Form
     {
-        Variables vars = new Variables(); 
+        Variables vars = new Variables();
         List<string> deviceIdWithImei = new List<string>();
         List<string> devices = new List<string>();
         Process getDeviceIdProcess = new Process();
         Process imeiProcess = new Process();
-        bool deviceControl = false;  
+        bool deviceControl = false;
         public MainPage()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace SMS
                     string deviceImei = lines[i].Split(':')[2];
                     if (!CheckDeviceId(deviceImei, deviceId))
                     {
-                        MessageBox.Show(deviceName + "'s id seems changed. If it's not plugged in connect "+deviceName+" or update device id on registering page.");
+                        MessageBox.Show(deviceName + "'s id seems changed. If it's not plugged in connect " + deviceName + " or update device id on registering page.");
                         deviceControl = false;
                         i = 999;//breaking the loop(controlling with loop variable)
                     }
@@ -68,7 +68,7 @@ namespace SMS
             }
         }
         private bool CheckDeviceId(string imei, string id)
-        { 
+        {
             imeiProcess.StartInfo.UseShellExecute = false;
             imeiProcess.StartInfo.RedirectStandardOutput = true;
             imeiProcess.StartInfo.CreateNoWindow = true;
@@ -78,8 +78,8 @@ namespace SMS
             imeiProcess.Start();
             imeiProcess.WaitForExit();
             string deviceImei = System.IO.File.ReadAllText(vars.imeisTxtPath);
-            deviceImei= deviceImei.Replace("\n", "").Replace("\r", "");
-            deviceImei = deviceImei.Replace(" ", ""); 
+            deviceImei = deviceImei.Replace("\n", "").Replace("\r", "");
+            deviceImei = deviceImei.Replace(" ", "");
             deviceImei = deviceImei.Replace("\t", "");
             File.Delete(vars.imeisTxtPath);
             if (deviceImei == imei)
@@ -106,12 +106,12 @@ namespace SMS
                 Process[] runingProcess = Process.GetProcessesByName("SMS");
                 for (int i = 0; i < runingProcess.Length; i++)
                 {
-                   runingProcess[i].Kill(); 
+                    runingProcess[i].Kill();
                 }
             }
             catch { }
         }
-         
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             DevicesListBox.Items.Clear();
@@ -121,27 +121,65 @@ namespace SMS
         private void Number_AddToListButton_Click(object sender, EventArgs e)
         {
             NumbersListBox.Items.Add(NumberText.Text);
-            using (StreamWriter streamWriter=new StreamWriter(vars.savedNumbersPath))
+            string[] lines = ReadTxtFile(vars.savedNumbersPath);
+            string[] newLines = AddToArr(lines, NumberText.Text);
+            using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
             {
-                streamWriter.WriteLine(NumberText.Text);
+                foreach (string line in newLines)
+                    streamWriter.WriteLine(line);
                 streamWriter.Close();
             }
         }
 
         private void DeleteSelectedNumberButton_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void NumbersListBox_DoubleClick(object sender, EventArgs e)
         {
-            string itemToDel=NumbersListBox.SelectedItem.ToString();
+            string itemToDel = NumbersListBox.SelectedItem.ToString();
+            string[] lines;
+            string[] newLines;
             NumbersListBox.Items.Remove(itemToDel);
+            lines = ReadTxtFile(vars.savedNumbersPath);
+            newLines = DeleteFromArr(lines, itemToDel);
+            Task thread1 = Task.Factory.StartNew(() => DelFile(vars.savedNumbersPath));
+            Task.WaitAll(thread1);
             using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
             {
-                //delete?
+                foreach (string line in newLines)
+                    streamWriter.WriteLine(line);
+
                 streamWriter.Close();
             }
         }
+        private string[] ReadTxtFile(string file)
+        {
+            string[] lines;
+            using (StreamReader streamReader = new StreamReader(file))
+            {
+                lines = streamReader.ReadToEnd().Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                streamReader.Close();
+            }
+            return lines;
+        }
+        private string[] DeleteFromArr(string[] arr, string del)
+        {
+            List<string> tempList = arr.ToList();
+            tempList.Remove(del);
+            return tempList.ToArray();
+        }
+        private string[] AddToArr(string[] arr, string add)
+        {
+            List<string> tempList = arr.ToList();
+            tempList.Add(add);
+            return tempList.ToArray();
+        }
+        static void DelFile(string file)
+        {
+            File.Delete(file);
+        }
+
     }
 }
