@@ -9,6 +9,7 @@ namespace SMS
 { 
     class Variables
     {
+        //Class For Global Variables
         public void s(object x)
         {
             MessageBox.Show(x.ToString());

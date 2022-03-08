@@ -48,7 +48,6 @@
             this.StatusLabel = new System.Windows.Forms.Label();
             this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.DeleteSelectedNumberButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RefreshPictureButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -203,7 +202,7 @@
             this.deviceRegistiraToolStripMenuItem.Name = "deviceRegistiraToolStripMenuItem";
             this.deviceRegistiraToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
             this.deviceRegistiraToolStripMenuItem.Text = "Device Registration";
-            this.deviceRegistiraToolStripMenuItem.Click += new System.EventHandler(this.deviceRegistiraToolStripMenuItem_Click);
+            this.deviceRegistiraToolStripMenuItem.Click += new System.EventHandler(this.DeviceRegistiraToolStripMenuItem_Click);
             // 
             // label7
             // 
@@ -238,7 +237,7 @@
             this.RefreshPictureButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.RefreshPictureButton.TabIndex = 20;
             this.RefreshPictureButton.TabStop = false;
-            this.RefreshPictureButton.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.RefreshPictureButton.Click += new System.EventHandler(this.RefreshPictureButton_Click);
             // 
             // splitContainer1
             // 
@@ -259,7 +258,6 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.DeleteSelectedNumberButton);
             this.splitContainer1.Panel2.Controls.Add(this.NumbersListBox);
             this.splitContainer1.Panel2.Controls.Add(this.Message_SendSelectedButton);
             this.splitContainer1.Panel2.Controls.Add(this.NumberText);
@@ -273,16 +271,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(868, 421);
             this.splitContainer1.SplitterDistance = 287;
             this.splitContainer1.TabIndex = 21;
-            // 
-            // DeleteSelectedNumberButton
-            // 
-            this.DeleteSelectedNumberButton.Location = new System.Drawing.Point(376, 207);
-            this.DeleteSelectedNumberButton.Name = "DeleteSelectedNumberButton";
-            this.DeleteSelectedNumberButton.Size = new System.Drawing.Size(169, 23);
-            this.DeleteSelectedNumberButton.TabIndex = 14;
-            this.DeleteSelectedNumberButton.Text = "Delete Selected Number";
-            this.DeleteSelectedNumberButton.UseVisualStyleBackColor = true;
-            this.DeleteSelectedNumberButton.Click += new System.EventHandler(this.DeleteSelectedNumberButton_Click);
             // 
             // MainPage
             // 
@@ -333,7 +321,6 @@
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.PictureBox RefreshPictureButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button DeleteSelectedNumberButton;
     }
 }
 
