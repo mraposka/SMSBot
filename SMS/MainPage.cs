@@ -26,82 +26,6 @@ namespace SMS
         {
             InitializeComponent();
         }
-
-        //Events 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            AllDeviceStatusCheck();
-            GetNumbersList();
-        } 
-
-        private void DeviceRegistiraToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            DeviceRegister registerForm = new DeviceRegister();
-            registerForm.ShowDialog();
-        }
-
-        private void MainPage_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            try
-            {
-                Process[] runingProcess = Process.GetProcessesByName("SMS");
-                for (int i = 0; i < runingProcess.Length; i++)
-                {
-                    runingProcess[i].Kill();
-                }
-            }
-            catch { }
-        }
-
-        private void RefreshPictureButton_Click(object sender, EventArgs e)
-        {
-            DevicesListBox.Items.Clear();
-            AllDeviceStatusCheck();
-        }
-
-        private void Number_AddToListButton_Click(object sender, EventArgs e)
-        {
-            if (!NumbersListBox.Items.Contains(NumberText.Text))
-            { 
-                NumbersListBox.Items.Add(NumberText.Text);
-                string[] lines = ReadTxtFile(vars.savedNumbersPath);
-                string[] newLines = AddToArr(lines, NumberText.Text);
-                using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
-                {
-                    foreach (string line in newLines)
-                        streamWriter.WriteLine(line);
-                    streamWriter.Close();
-                }
-                DeleteBlankLinesFromTxt(vars.savedNumbersPath);
-            }
-            else
-            {
-                MessageBox.Show("\"" + NumberText.Text+ "\" is already in \"Numbers\" list");
-            }
-        } 
-
-        private void NumbersListBox_DoubleClick(object sender, EventArgs e)
-        {
-            string itemToDel = NumbersListBox.SelectedItem.ToString();
-            string[] lines;
-            string[] newLines;
-            NumbersListBox.Items.Remove(itemToDel);
-            lines = ReadTxtFile(vars.savedNumbersPath);
-            newLines = DeleteFromArr(lines, itemToDel);
-            Task thread1 = Task.Factory.StartNew(() => DelFile(vars.savedNumbersPath));
-            Task.WaitAll(thread1);
-            using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
-            {
-                foreach (string line in newLines)
-                    streamWriter.WriteLine(line);
-
-                streamWriter.Close();
-            } 
-            DeleteBlankLinesFromTxt(vars.savedNumbersPath);
-        }
-        //Events 
-
         //Functions 
         private void AllDeviceStatusCheck()
         {
@@ -126,8 +50,7 @@ namespace SMS
             }
             if (deviceControl)
             {
-                StatusLabel.Text = "OK";
-                Message_SendNowButton.Enabled = true;
+                StatusLabel.Text = "OK"; 
                 Message_SendAllButton.Enabled = true;
                 Message_SendSelectedButton.Enabled = true;
                 for (int i = 0; i < lines.Length; i++)
@@ -140,8 +63,7 @@ namespace SMS
             }
             else
             {
-                StatusLabel.Text = "Update Device Properties";
-                Message_SendNowButton.Enabled = false;
+                StatusLabel.Text = "Update Device Properties"; 
                 Message_SendAllButton.Enabled = false;
                 Message_SendSelectedButton.Enabled = false;
             }
@@ -225,7 +147,86 @@ namespace SMS
         static void DelFile(string file)
         {
             File.Delete(file);
-        } 
+        }
+
         //Functions
+
+        //Events 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            AllDeviceStatusCheck();
+            GetNumbersList();
+        } 
+
+        private void DeviceRegistiraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            DeviceRegister registerForm = new DeviceRegister();
+            registerForm.ShowDialog();
+        }
+
+        private void MainPage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                Process[] runingProcess = Process.GetProcessesByName("SMS");
+                for (int i = 0; i < runingProcess.Length; i++)
+                {
+                    runingProcess[i].Kill();
+                }
+            }
+            catch { }
+        }
+
+        private void RefreshPictureButton_Click(object sender, EventArgs e)
+        {
+            DevicesListBox.Items.Clear();
+            AllDeviceStatusCheck();
+        }
+
+        private void Number_AddToListButton_Click(object sender, EventArgs e)
+        {
+            if (!NumbersListBox.Items.Contains(NumberText.Text)&&!String.IsNullOrEmpty(NumberText.Text))
+            { 
+                NumbersListBox.Items.Add(NumberText.Text);
+                string[] lines = ReadTxtFile(vars.savedNumbersPath);
+                string[] newLines = AddToArr(lines, NumberText.Text);
+                using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
+                {
+                    foreach (string line in newLines)
+                        streamWriter.WriteLine(line);
+                    streamWriter.Close();
+                }
+                DeleteBlankLinesFromTxt(vars.savedNumbersPath);
+            }
+            else
+            {
+                MessageBox.Show("\"" + NumberText.Text+ "\" is already in \"Numbers\" list");
+            }
+        } 
+
+        private void NumbersListBox_DoubleClick(object sender, EventArgs e)
+        {
+            string itemToDel = NumbersListBox.SelectedItem.ToString();
+            string[] lines;
+            string[] newLines;
+            NumbersListBox.Items.Remove(itemToDel);
+            lines = ReadTxtFile(vars.savedNumbersPath);
+            newLines = DeleteFromArr(lines, itemToDel);
+            Task thread1 = Task.Factory.StartNew(() => DelFile(vars.savedNumbersPath));
+            Task.WaitAll(thread1);
+            using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
+            {
+                foreach (string line in newLines)
+                    streamWriter.WriteLine(line);
+
+                streamWriter.Close();
+            } 
+            DeleteBlankLinesFromTxt(vars.savedNumbersPath);
+        }
+         
+        //Events 
+
+
     }
 }

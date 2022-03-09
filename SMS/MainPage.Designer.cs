@@ -35,7 +35,6 @@
             this.DevicesLabel = new System.Windows.Forms.Label();
             this.Number_AddToListButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.Message_SendNowButton = new System.Windows.Forms.Button();
             this.NumbersLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.Message_SendAllButton = new System.Windows.Forms.Button();
@@ -48,6 +47,7 @@
             this.StatusLabel = new System.Windows.Forms.Label();
             this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RefreshPictureButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -68,7 +68,7 @@
             this.DevicesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.DevicesListBox.FormattingEnabled = true;
             this.DevicesListBox.ItemHeight = 16;
-            this.DevicesListBox.Location = new System.Drawing.Point(6, 31);
+            this.DevicesListBox.Location = new System.Drawing.Point(23, 30);
             this.DevicesListBox.Name = "DevicesListBox";
             this.DevicesListBox.Size = new System.Drawing.Size(273, 340);
             this.DevicesListBox.TabIndex = 1;
@@ -84,9 +84,9 @@
             // NumbersListBox
             // 
             this.NumbersListBox.FormattingEnabled = true;
-            this.NumbersListBox.Location = new System.Drawing.Point(376, 41);
+            this.NumbersListBox.Location = new System.Drawing.Point(116, 217);
             this.NumbersListBox.Name = "NumbersListBox";
-            this.NumbersListBox.Size = new System.Drawing.Size(169, 160);
+            this.NumbersListBox.Size = new System.Drawing.Size(253, 147);
             this.NumbersListBox.TabIndex = 3;
             this.NumbersListBox.DoubleClick += new System.EventHandler(this.NumbersListBox_DoubleClick);
             // 
@@ -94,7 +94,7 @@
             // 
             this.DevicesLabel.AutoSize = true;
             this.DevicesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.DevicesLabel.Location = new System.Drawing.Point(104, 7);
+            this.DevicesLabel.Location = new System.Drawing.Point(121, 7);
             this.DevicesLabel.Name = "DevicesLabel";
             this.DevicesLabel.Size = new System.Drawing.Size(77, 24);
             this.DevicesLabel.TabIndex = 4;
@@ -120,20 +120,11 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Number:";
             // 
-            // Message_SendNowButton
-            // 
-            this.Message_SendNowButton.Location = new System.Drawing.Point(116, 146);
-            this.Message_SendNowButton.Name = "Message_SendNowButton";
-            this.Message_SendNowButton.Size = new System.Drawing.Size(254, 23);
-            this.Message_SendNowButton.TabIndex = 7;
-            this.Message_SendNowButton.Text = "Send Now";
-            this.Message_SendNowButton.UseVisualStyleBackColor = true;
-            // 
             // NumbersLabel
             // 
             this.NumbersLabel.AutoSize = true;
             this.NumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.NumbersLabel.Location = new System.Drawing.Point(408, 14);
+            this.NumbersLabel.Location = new System.Drawing.Point(15, 217);
             this.NumbersLabel.Name = "NumbersLabel";
             this.NumbersLabel.Size = new System.Drawing.Size(88, 24);
             this.NumbersLabel.TabIndex = 8;
@@ -151,7 +142,7 @@
             // 
             // Message_SendAllButton
             // 
-            this.Message_SendAllButton.Location = new System.Drawing.Point(116, 175);
+            this.Message_SendAllButton.Location = new System.Drawing.Point(116, 371);
             this.Message_SendAllButton.Name = "Message_SendAllButton";
             this.Message_SendAllButton.Size = new System.Drawing.Size(126, 23);
             this.Message_SendAllButton.TabIndex = 12;
@@ -160,7 +151,7 @@
             // 
             // Message_SendSelectedButton
             // 
-            this.Message_SendSelectedButton.Location = new System.Drawing.Point(242, 175);
+            this.Message_SendSelectedButton.Location = new System.Drawing.Point(242, 371);
             this.Message_SendSelectedButton.Name = "Message_SendSelectedButton";
             this.Message_SendSelectedButton.Size = new System.Drawing.Size(126, 23);
             this.Message_SendSelectedButton.TabIndex = 13;
@@ -171,7 +162,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.Location = new System.Drawing.Point(3, 372);
+            this.label4.Location = new System.Drawing.Point(20, 372);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(162, 18);
             this.label4.TabIndex = 14;
@@ -181,7 +172,7 @@
             // 
             this.SelectedDeviceLabel.AutoSize = true;
             this.SelectedDeviceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.SelectedDeviceLabel.Location = new System.Drawing.Point(165, 373);
+            this.SelectedDeviceLabel.Location = new System.Drawing.Point(182, 373);
             this.SelectedDeviceLabel.Name = "SelectedDeviceLabel";
             this.SelectedDeviceLabel.Size = new System.Drawing.Size(16, 18);
             this.SelectedDeviceLabel.TabIndex = 15;
@@ -193,7 +184,7 @@
             this.deviceRegistiraToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(887, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(764, 24);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -208,7 +199,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label7.Location = new System.Drawing.Point(3, 397);
+            this.label7.Location = new System.Drawing.Point(20, 397);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(111, 18);
             this.label7.TabIndex = 18;
@@ -218,7 +209,7 @@
             // 
             this.StatusLabel.AutoSize = true;
             this.StatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.StatusLabel.Location = new System.Drawing.Point(113, 397);
+            this.StatusLabel.Location = new System.Drawing.Point(130, 397);
             this.StatusLabel.Name = "StatusLabel";
             this.StatusLabel.Size = new System.Drawing.Size(82, 18);
             this.StatusLabel.TabIndex = 19;
@@ -231,9 +222,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RefreshPictureButton.BackColor = System.Drawing.Color.Transparent;
             this.RefreshPictureButton.ImageLocation = "C:\\Users\\Win\\source\\repos\\SMS\\SMS\\refresh.png";
-            this.RefreshPictureButton.Location = new System.Drawing.Point(254, 4);
+            this.RefreshPictureButton.Location = new System.Drawing.Point(271, 7);
             this.RefreshPictureButton.Name = "RefreshPictureButton";
-            this.RefreshPictureButton.Size = new System.Drawing.Size(25, 24);
+            this.RefreshPictureButton.Size = new System.Drawing.Size(25, 22);
             this.RefreshPictureButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.RefreshPictureButton.TabIndex = 20;
             this.RefreshPictureButton.TabStop = false;
@@ -242,8 +233,7 @@
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(11, 27);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -258,6 +248,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.NumbersListBox);
             this.splitContainer1.Panel2.Controls.Add(this.Message_SendSelectedButton);
             this.splitContainer1.Panel2.Controls.Add(this.NumberText);
@@ -267,17 +258,25 @@
             this.splitContainer1.Panel2.Controls.Add(this.Number_AddToListButton);
             this.splitContainer1.Panel2.Controls.Add(this.NumbersLabel);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
-            this.splitContainer1.Panel2.Controls.Add(this.Message_SendNowButton);
-            this.splitContainer1.Size = new System.Drawing.Size(868, 421);
-            this.splitContainer1.SplitterDistance = 287;
+            this.splitContainer1.Size = new System.Drawing.Size(764, 427);
+            this.splitContainer1.SplitterDistance = 325;
             this.splitContainer1.TabIndex = 21;
+            // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(19, 179);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(403, 2);
+            this.label1.TabIndex = 14;
             // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(887, 451);
+            this.ClientSize = new System.Drawing.Size(764, 451);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -308,7 +307,6 @@
         private System.Windows.Forms.Label DevicesLabel;
         private System.Windows.Forms.Button Number_AddToListButton;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button Message_SendNowButton;
         private System.Windows.Forms.Label NumbersLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button Message_SendAllButton;
@@ -321,6 +319,7 @@
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.PictureBox RefreshPictureButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
