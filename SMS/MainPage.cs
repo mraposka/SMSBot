@@ -205,8 +205,7 @@ namespace SMS
         }
 
         private void Message_SendAllButton_Click(object sender, EventArgs e)
-        {
-            
+        { 
             if(DevicesListBox.SelectedIndex!=-1&&NumbersListBox.Items.Count > 0)
             {
                 vars.s((object)("Gönderildi"));
@@ -225,6 +224,11 @@ namespace SMS
                 Message_SendAllButton.Enabled = false;
                 Message_SendSelectedButton.Enabled = false;
             }
+        }
+
+        private void Message_SendSelectedButton_Click(object sender, EventArgs e)
+        {
+            //Continue
         }
 
         //Events 

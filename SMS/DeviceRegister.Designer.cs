@@ -36,7 +36,6 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.RefreshButton = new System.Windows.Forms.PictureBox();
-            this.setMessageQuotaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
@@ -46,8 +45,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sendSMSToolStripMenuItem,
-            this.setMessageQuotaToolStripMenuItem});
+            this.sendSMSToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(393, 24);
@@ -94,7 +92,7 @@
             this.SaveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.SaveButton.Location = new System.Drawing.Point(273, 162);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(108, 24);
+            this.SaveButton.Size = new System.Drawing.Size(108, 48);
             this.SaveButton.TabIndex = 5;
             this.SaveButton.Text = "Save Device";
             this.SaveButton.UseVisualStyleBackColor = true;
@@ -124,13 +122,6 @@
             this.RefreshButton.TabIndex = 21;
             this.RefreshButton.TabStop = false;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
-            // 
-            // setMessageQuotaToolStripMenuItem
-            // 
-            this.setMessageQuotaToolStripMenuItem.Name = "setMessageQuotaToolStripMenuItem";
-            this.setMessageQuotaToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
-            this.setMessageQuotaToolStripMenuItem.Text = "Set Message Quota";
-            this.setMessageQuotaToolStripMenuItem.Click += new System.EventHandler(this.setMessageQuotaToolStripMenuItem_Click);
             // 
             // textBox1
             // 
@@ -168,7 +159,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "DeviceRegister";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.Text = "Device Registration";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DeviceRegister_FormClosing);
             this.Load += new System.EventHandler(this.DeviceRegister_Load);
@@ -190,7 +180,6 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox RefreshButton;
-        private System.Windows.Forms.ToolStripMenuItem setMessageQuotaToolStripMenuItem;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
     }

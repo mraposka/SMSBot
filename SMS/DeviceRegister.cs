@@ -80,11 +80,11 @@ namespace SMS
                 //Get device's imei number
                 DeviceListbox.Items.Clear();
                 vars.DeleteBlankLinesFromTxt(vars.savedDevicesPath);
-                string[] savedDevices = ReadAllLines(vars.savedDevicesPath); 
+                string[] savedDevices = ReadAllLines(vars.savedDevicesPath);
                 //listing devices
                 foreach (string device in deviceIdWithImei)
                 {
-                    if (savedDevices[0] =="")
+                    if (savedDevices[0] == "")
                     {
                         DeviceListbox.Items.Add(device);
                     }
@@ -134,23 +134,35 @@ namespace SMS
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(DeviceNameText.Text))
+            {
+                MessageBox.Show("Device name cannot be empty");
+                return;
+            }
+            else if (String.IsNullOrEmpty(textBox1.Text))
+            {
+                MessageBox.Show("Message quota cannot be empty");
+                return;
+            }
             string newRecord = "";
             if (!selectedDeviceIdWithImei.Contains("-"))
             { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[0] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + "-" + textBox1.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
             else
-            { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[0] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + "-" + textBox1.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
+            { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + textBox1.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
             string[] lines = ReadAllLines(vars.savedDevicesPath);
             if (selectedDeviceOldName != "")
             {
-                string oldRecord = (selectedDeviceOldName + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[0] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + selectedDeviceIdWithImei.Split('-')[1]).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
-
+                string oldRecord = (selectedDeviceOldName + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + selectedDeviceIdWithImei.Split('-')[1]).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
+                MessageBox.Show(newRecord + Environment.NewLine + oldRecord);
                 LineChanger(newRecord, vars.savedDevicesPath, oldRecord);
             }
             else
             {
+                MessageBox.Show(newRecord);
                 LineChanger(newRecord, vars.savedDevicesPath, "");
             }
             selectedDeviceOldName = "";
+            LoadDevices();
         }
         private string[] ReadAllLines(string path)
         {
@@ -201,37 +213,18 @@ namespace SMS
         {
             try
             {
-                if (DeviceListbox.SelectedItem.ToString().Contains("-"))
+                selectedDeviceIdWithImei = DeviceListbox.SelectedItem.ToString();
+                string deviceId = selectedDeviceIdWithImei.Split('-')[0].Split(':')[1];
+                string[] lines = File.ReadAllLines(vars.savedDevicesPath);
+                for (int i = 0; i < lines.Length; i++)
                 {
-                    selectedDeviceIdWithImei = DeviceListbox.SelectedItem.ToString();
-                    string deviceId = selectedDeviceIdWithImei.Split('-')[0].Split(':')[1];
-                    string[] lines = File.ReadAllLines(vars.savedDevicesPath);
-                    for (int i = 0; i < lines.Length; i++)
+                    if (!String.IsNullOrEmpty(lines[i]) && lines[i].Split('-')[0].Split(':')[1] == deviceId)
                     {
-                        if (!String.IsNullOrEmpty(lines[i]) && lines[i].Split('-')[0].Split(':')[1] == deviceId)
-                        {
-                            DeviceNameText.Text = lines[i].Split('-')[0].Split(':')[0];
-                            textBox1.Text = lines[i].Split('-')[1];
-                            selectedDeviceOldName = lines[i].Split('-')[0].Split(':')[0]; break;
-                        }
+                        DeviceNameText.Text = lines[i].Split('-')[0].Split(':')[0];
+                        textBox1.Text = lines[i].Split('-')[1];
+                        selectedDeviceOldName = lines[i].Split('-')[0].Split(':')[0]; break;
                     }
                 }
-                else
-                {
-                    selectedDeviceIdWithImei = DeviceListbox.SelectedItem.ToString();
-                    string deviceId = selectedDeviceIdWithImei.Split(':')[1];
-                    string[] lines = File.ReadAllLines(vars.savedDevicesPath);
-                    for (int i = 0; i < lines.Length; i++)
-                    {
-                        if (!String.IsNullOrEmpty(lines[i]) && lines[i].Split(':')[1] == deviceId)
-                        {
-                            DeviceNameText.Text = lines[i].Split(':')[0];
-                            textBox1.Text = "-1";
-                            selectedDeviceOldName = lines[i].Split(':')[0]; break;
-                        }
-                    }
-                }
-
             }
             catch { }
         }

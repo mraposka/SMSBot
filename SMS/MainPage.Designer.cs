@@ -46,16 +46,16 @@
             this.deviceRegistiraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.Label();
-            this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
             this.CheckSelectedDevice_Timer = new System.Windows.Forms.Timer(this.components);
+            this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RefreshPictureButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RefreshPictureButton)).BeginInit();
             this.SuspendLayout();
             // 
             // NumberText
@@ -160,6 +160,7 @@
             this.Message_SendSelectedButton.TabIndex = 13;
             this.Message_SendSelectedButton.Text = "Send Selected";
             this.Message_SendSelectedButton.UseVisualStyleBackColor = true;
+            this.Message_SendSelectedButton.Click += new System.EventHandler(this.Message_SendSelectedButton_Click);
             // 
             // label4
             // 
@@ -218,21 +219,6 @@
             this.StatusLabel.TabIndex = 19;
             this.StatusLabel.Text = "Checking...";
             // 
-            // RefreshPictureButton
-            // 
-            this.RefreshPictureButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RefreshPictureButton.BackColor = System.Drawing.Color.Transparent;
-            this.RefreshPictureButton.ImageLocation = "C:\\Users\\Win\\source\\repos\\SMS\\SMS\\refresh.png";
-            this.RefreshPictureButton.Location = new System.Drawing.Point(271, 7);
-            this.RefreshPictureButton.Name = "RefreshPictureButton";
-            this.RefreshPictureButton.Size = new System.Drawing.Size(25, 22);
-            this.RefreshPictureButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.RefreshPictureButton.TabIndex = 20;
-            this.RefreshPictureButton.TabStop = false;
-            this.RefreshPictureButton.Click += new System.EventHandler(this.RefreshPictureButton_Click);
-            // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -278,6 +264,21 @@
             // 
             this.CheckSelectedDevice_Timer.Tick += new System.EventHandler(this.CheckSelectedDevice_Timer_Tick);
             // 
+            // RefreshPictureButton
+            // 
+            this.RefreshPictureButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RefreshPictureButton.BackColor = System.Drawing.Color.Transparent;
+            this.RefreshPictureButton.ImageLocation = "C:\\Users\\Win\\source\\repos\\SMS\\SMS\\refresh.png";
+            this.RefreshPictureButton.Location = new System.Drawing.Point(271, 7);
+            this.RefreshPictureButton.Name = "RefreshPictureButton";
+            this.RefreshPictureButton.Size = new System.Drawing.Size(25, 22);
+            this.RefreshPictureButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.RefreshPictureButton.TabIndex = 20;
+            this.RefreshPictureButton.TabStop = false;
+            this.RefreshPictureButton.Click += new System.EventHandler(this.RefreshPictureButton_Click);
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,13 +294,13 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RefreshPictureButton)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.RefreshPictureButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
