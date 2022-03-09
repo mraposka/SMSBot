@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.NumberText = new System.Windows.Forms.TextBox();
             this.DevicesListBox = new System.Windows.Forms.ListBox();
             this.MessageText = new System.Windows.Forms.TextBox();
@@ -48,6 +49,7 @@
             this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
+            this.CheckSelectedDevice_Timer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RefreshPictureButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -148,6 +150,7 @@
             this.Message_SendAllButton.TabIndex = 12;
             this.Message_SendAllButton.Text = "Send All";
             this.Message_SendAllButton.UseVisualStyleBackColor = true;
+            this.Message_SendAllButton.Click += new System.EventHandler(this.Message_SendAllButton_Click);
             // 
             // Message_SendSelectedButton
             // 
@@ -271,6 +274,10 @@
             this.label1.Size = new System.Drawing.Size(403, 2);
             this.label1.TabIndex = 14;
             // 
+            // CheckSelectedDevice_Timer
+            // 
+            this.CheckSelectedDevice_Timer.Tick += new System.EventHandler(this.CheckSelectedDevice_Timer_Tick);
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -320,6 +327,7 @@
         private System.Windows.Forms.PictureBox RefreshPictureButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer CheckSelectedDevice_Timer;
     }
 }
 

@@ -35,9 +35,9 @@ namespace SMS
             {
                 if (!String.IsNullOrEmpty(lines[i]))
                 {
-                    string deviceName = lines[i].Split(':')[0];
-                    string deviceId = lines[i].Split(':')[1];
-                    string deviceImei = lines[i].Split(':')[2];
+                    string deviceName = lines[i].Split('-')[0].Split(':')[0];
+                    string deviceId = lines[i].Split('-')[0].Split(':')[1];
+                    string deviceImei = lines[i].Split('-')[0].Split(':')[2];
                     if (!CheckDeviceId(deviceImei, deviceId))
                     {
                         MessageBox.Show(deviceName + "'s id seems changed. If it's not plugged in connect " + deviceName + " or update device id on registering page.");
@@ -106,30 +106,7 @@ namespace SMS
             }
             return lines;
         }
-
-        private void DeleteBlankLinesFromTxt(string file)
-        {
-            var tempFileName = Path.GetTempFileName();
-            try
-            {
-                using (var streamReader = new StreamReader(file))
-                using (var streamWriter = new StreamWriter(tempFileName))
-                {
-                    string line;
-                    while ((line = streamReader.ReadLine()) != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(line))
-                            streamWriter.WriteLine(line);
-                    }
-                }
-                File.Copy(tempFileName, file, true);
-            }
-            finally
-            {
-                File.Delete(tempFileName);
-            }
-        }
-
+         
         private string[] DeleteFromArr(string[] arr, string del)
         {
             List<string> tempList = arr.ToList();
@@ -156,6 +133,7 @@ namespace SMS
         {
             AllDeviceStatusCheck();
             GetNumbersList();
+            CheckSelectedDevice_Timer.Start();
         } 
 
         private void DeviceRegistiraToolStripMenuItem_Click(object sender, EventArgs e)
@@ -180,6 +158,7 @@ namespace SMS
 
         private void RefreshPictureButton_Click(object sender, EventArgs e)
         {
+            vars.s(DevicesListBox.SelectedIndex);
             DevicesListBox.Items.Clear();
             AllDeviceStatusCheck();
         }
@@ -197,7 +176,7 @@ namespace SMS
                         streamWriter.WriteLine(line);
                     streamWriter.Close();
                 }
-                DeleteBlankLinesFromTxt(vars.savedNumbersPath);
+                vars.DeleteBlankLinesFromTxt(vars.savedNumbersPath);
             }
             else
             {
@@ -221,10 +200,33 @@ namespace SMS
                     streamWriter.WriteLine(line);
 
                 streamWriter.Close();
-            } 
-            DeleteBlankLinesFromTxt(vars.savedNumbersPath);
+            }
+            vars.DeleteBlankLinesFromTxt(vars.savedNumbersPath);
         }
-         
+
+        private void Message_SendAllButton_Click(object sender, EventArgs e)
+        {
+            
+            if(DevicesListBox.SelectedIndex!=-1&&NumbersListBox.Items.Count > 0)
+            {
+                vars.s((object)("Gönderildi"));
+            }
+        }
+
+        private void CheckSelectedDevice_Timer_Tick(object sender, EventArgs e)
+        {
+            if (DevicesListBox.SelectedIndex != -1)
+            {
+                Message_SendAllButton.Enabled = true;
+                Message_SendSelectedButton.Enabled = true;
+            }
+            else
+            {
+                Message_SendAllButton.Enabled = false;
+                Message_SendSelectedButton.Enabled = false;
+            }
+        }
+
         //Events 
 
 

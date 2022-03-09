@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageQuota.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageQuota.Designer.cs">
+      <DependentUpon>MessageQuota.cs</DependentUpon>
+    </Compile>
     <Compile Include="Variables.cs" />
     <Compile Include="MainPage.cs">
       <SubType>Form</SubType>
@@ -63,6 +69,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DeviceRegister.resx">
       <DependentUpon>DeviceRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageQuota.resx">
+      <DependentUpon>MessageQuota.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
