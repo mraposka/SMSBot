@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,7 +21,7 @@ namespace SMS
         List<string> devices = new List<string>();
         Process getDeviceIdProcess = new Process();
         Process imeiProcess = new Process();
-        bool deviceControl = false; 
+        bool deviceControl = false;
         //Variables
         public MainPage()
         {
@@ -50,7 +51,7 @@ namespace SMS
             }
             if (deviceControl)
             {
-                StatusLabel.Text = "OK"; 
+                StatusLabel.Text = "OK";
                 Message_SendAllButton.Enabled = true;
                 Message_SendSelectedButton.Enabled = true;
                 for (int i = 0; i < lines.Length; i++)
@@ -63,7 +64,7 @@ namespace SMS
             }
             else
             {
-                StatusLabel.Text = "Update Device Properties"; 
+                StatusLabel.Text = "Update Device Properties";
                 Message_SendAllButton.Enabled = false;
                 Message_SendSelectedButton.Enabled = false;
             }
@@ -106,7 +107,7 @@ namespace SMS
             }
             return lines;
         }
-         
+
         private string[] DeleteFromArr(string[] arr, string del)
         {
             List<string> tempList = arr.ToList();
@@ -134,7 +135,7 @@ namespace SMS
             AllDeviceStatusCheck();
             GetNumbersList();
             CheckSelectedDevice_Timer.Start();
-        } 
+        }
 
         private void DeviceRegistiraToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -158,15 +159,14 @@ namespace SMS
 
         private void RefreshPictureButton_Click(object sender, EventArgs e)
         {
-            vars.s(DevicesListBox.SelectedIndex);
             DevicesListBox.Items.Clear();
             AllDeviceStatusCheck();
         }
 
         private void Number_AddToListButton_Click(object sender, EventArgs e)
         {
-            if (!NumbersListBox.Items.Contains(NumberText.Text)&&!String.IsNullOrEmpty(NumberText.Text))
-            { 
+            if (!NumbersListBox.Items.Contains(NumberText.Text) && !String.IsNullOrEmpty(NumberText.Text))
+            {
                 NumbersListBox.Items.Add(NumberText.Text);
                 string[] lines = ReadTxtFile(vars.savedNumbersPath);
                 string[] newLines = AddToArr(lines, NumberText.Text);
@@ -180,9 +180,10 @@ namespace SMS
             }
             else
             {
-                MessageBox.Show("\"" + NumberText.Text+ "\" is already in \"Numbers\" list");
+                MessageBox.Show("\"" + NumberText.Text + "\" is already in \"Numbers\" list");
             }
-        } 
+            NumberText.Clear();
+        }
 
         private void NumbersListBox_DoubleClick(object sender, EventArgs e)
         {
@@ -205,10 +206,28 @@ namespace SMS
         }
 
         private void Message_SendAllButton_Click(object sender, EventArgs e)
-        { 
-            if(DevicesListBox.SelectedIndex!=-1&&NumbersListBox.Items.Count > 0)
+        {
+            int processNumber = NumbersListBox.Items.Count - 1;
+            int succesProcess = 0;
+            if (DevicesListBox.SelectedIndex != -1 && NumbersListBox.Items.Count > 0)
             {
-                vars.s((object)("Gönderildi"));
+                for (int i = 0; i < processNumber; i++)
+                {
+                    string output = vars.SendMessage(DevicesListBox.SelectedItem.ToString().Split('-')[0].Split(':')[1], NumbersListBox.Items[i].ToString(), MessageText.Text);
+                    if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
+                    {
+                        succesProcess++;
+                        if (i == processNumber - 1)
+                        {
+                            //Webe başarılı olduğu logu gönderilecek
+                            MessageStatus.Text = succesProcess.ToString() + " message sent " + DateTime.Now.ToString("HH:mm");
+                        }
+                    }
+                    else
+                    {
+                        //Webe başarısız olduğu logu gönderilecek
+                    }
+                }
             }
         }
 
@@ -228,7 +247,32 @@ namespace SMS
 
         private void Message_SendSelectedButton_Click(object sender, EventArgs e)
         {
-            //Continue
+            if (DevicesListBox.SelectedIndex != -1 && !String.IsNullOrEmpty(MessageText.Text) && !String.IsNullOrEmpty(MessageText.Text))
+            {
+                string output = vars.SendMessage(DevicesListBox.SelectedItem.ToString().Split('-')[0].Split(':')[1], NumbersListBox.SelectedItem.ToString(), MessageText.Text);
+                NumberText.Text = output;
+                if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
+                {
+                    MessageStatus.Text = "Message sent " + DateTime.Now.ToString("HH:mm");
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 300; i++)
+            {
+                string command = "/c " + vars.adbPath + "adb.exe shell service call isms " + i + " i32 1 s16 \"com.android.internal.telephony.ISms\" s16 \" +905442551381 \" s16 \"null\" s16 \" deneme" + i.ToString() + "\" s16 \"null\" s16 \"null\"";
+                Process p = new Process();
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.CreateNoWindow = false;
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                p.StartInfo.FileName = "cmd.exe";
+                p.StartInfo.Arguments = command;
+                p.Start();
+                Thread.Sleep(1000);
+            }
         }
 
         //Events 

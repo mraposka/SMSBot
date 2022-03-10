@@ -40,7 +40,7 @@ namespace SMS
                 getDeviceIdProcess.StartInfo.CreateNoWindow = true;
                 getDeviceIdProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 getDeviceIdProcess.StartInfo.Arguments = "devices";
-                getDeviceIdProcess.StartInfo.FileName = vars.adbPath;
+                getDeviceIdProcess.StartInfo.FileName = vars.adbPath+"adb.exe";
                 getDeviceIdProcess.Start();
                 string output = getDeviceIdProcess.StandardOutput.ReadToEnd();
                 getDeviceIdProcess.WaitForExit();
@@ -152,13 +152,11 @@ namespace SMS
             string[] lines = ReadAllLines(vars.savedDevicesPath);
             if (selectedDeviceOldName != "")
             {
-                string oldRecord = (selectedDeviceOldName + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + selectedDeviceIdWithImei.Split('-')[1]).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
-                MessageBox.Show(newRecord + Environment.NewLine + oldRecord);
+                string oldRecord = (selectedDeviceOldName + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + selectedDeviceIdWithImei.Split('-')[1]).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");  
                 LineChanger(newRecord, vars.savedDevicesPath, oldRecord);
             }
             else
             {
-                MessageBox.Show(newRecord);
                 LineChanger(newRecord, vars.savedDevicesPath, "");
             }
             selectedDeviceOldName = "";
