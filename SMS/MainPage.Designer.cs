@@ -48,7 +48,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.deviceList = new System.Windows.Forms.ListView();
             this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.MessageStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.CheckSelectedDevice_Timer = new System.Windows.Forms.Timer(this.components);
@@ -234,7 +233,6 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.button1);
             this.splitContainer1.Panel2.Controls.Add(this.MessageStatus);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.NumbersListBox);
@@ -259,6 +257,7 @@
             this.deviceList.Size = new System.Drawing.Size(273, 329);
             this.deviceList.TabIndex = 21;
             this.deviceList.UseCompatibleStateImageBehavior = false;
+            this.deviceList.View = System.Windows.Forms.View.List;
             // 
             // RefreshPictureButton
             // 
@@ -274,17 +273,6 @@
             this.RefreshPictureButton.TabIndex = 20;
             this.RefreshPictureButton.TabStop = false;
             this.RefreshPictureButton.Click += new System.EventHandler(this.RefreshPictureButton_Click);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Location = new System.Drawing.Point(-1, 67);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 36);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "Add To List";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MessageStatus
             // 
@@ -363,7 +351,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer CheckSelectedDevice_Timer;
         private System.Windows.Forms.Label MessageStatus;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListView deviceList;
     }
 }

@@ -87,8 +87,7 @@ namespace SMS
                 return true;
             else
                 return false;
-        }
-
+        } 
         private void GetNumbersList()
         {
             string[] lines = vars.ReadTxtFile(vars.savedNumbersPath);
@@ -103,15 +102,13 @@ namespace SMS
             AllDeviceStatusCheck();
             GetNumbersList();
             CheckSelectedDevice_Timer.Start();
-        }
-
+        } 
         private void DeviceRegistiraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
             DeviceRegister registerForm = new DeviceRegister();
             registerForm.ShowDialog();
-        }
-
+        } 
         private void MainPage_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
@@ -123,14 +120,12 @@ namespace SMS
                 }
             }
             catch { }
-        }
-
+        } 
         private void RefreshPictureButton_Click(object sender, EventArgs e)
         {
             deviceList.Items.Clear();
             AllDeviceStatusCheck();
-        }
-
+        } 
         private void Number_AddToListButton_Click(object sender, EventArgs e)
         {
             if (!NumbersListBox.Items.Contains(NumberText.Text) && !String.IsNullOrEmpty(NumberText.Text))
@@ -151,15 +146,13 @@ namespace SMS
                 MessageBox.Show("\"" + NumberText.Text + "\" is already in \"Numbers\" list");
             }
             NumberText.Clear();
-        }
-
+        } 
         private void NumbersListBox_DoubleClick(object sender, EventArgs e)
         {
             string itemToDel = NumbersListBox.SelectedItem.ToString();
             vars.deleteLineFromTxt(vars.savedNumbersPath, itemToDel);
             GetNumbersList();
-        }
-
+        } 
         private void Message_SendAllButton_Click(object sender, EventArgs e)
         {
             int processNumber = NumbersListBox.Items.Count - 1;
@@ -184,8 +177,7 @@ namespace SMS
                     }
                 }
             }
-        }
-
+        } 
         private void CheckSelectedDevice_Timer_Tick(object sender, EventArgs e)
         {
             if (deviceList.SelectedItems.Count > 0)
@@ -198,8 +190,7 @@ namespace SMS
                 Message_SendAllButton.Enabled = false;
                 Message_SendSelectedButton.Enabled = false;
             }
-        }
-
+        } 
         private void Message_SendSelectedButton_Click(object sender, EventArgs e)
         {
             if (deviceList.SelectedItems.Count > 0 && !String.IsNullOrEmpty(MessageText.Text) && !String.IsNullOrEmpty(MessageText.Text))
@@ -211,25 +202,7 @@ namespace SMS
                     MessageStatus.Text = "Message sent " + DateTime.Now.ToString("HH:mm");
                 }
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 300; i++)
-            {
-                string command = "/c " + vars.adbPath + "adb.exe shell service call isms " + i + " i32 1 s16 \"com.android.internal.telephony.ISms\" s16 \" +905442551381 \" s16 \"null\" s16 \" deneme" + i.ToString() + "\" s16 \"null\" s16 \"null\"";
-                Process p = new Process();
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.CreateNoWindow = false;
-                p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-                p.StartInfo.FileName = "cmd.exe";
-                p.StartInfo.Arguments = command;
-                p.Start();
-                Thread.Sleep(1000);
-            }
-        }
-
+        } 
         //Events 
 
 
