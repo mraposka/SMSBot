@@ -51,6 +51,7 @@
             this.MessageStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.CheckSelectedDevice_Timer = new System.Windows.Forms.Timer(this.components);
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -233,6 +234,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.MessageStatus);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.NumbersListBox);
@@ -300,6 +302,19 @@
             // 
             this.CheckSelectedDevice_Timer.Tick += new System.EventHandler(this.CheckSelectedDevice_Timer_Tick);
             // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.Location = new System.Drawing.Point(113, 391);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(111, 18);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Sending Status:";
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -352,6 +367,7 @@
         private System.Windows.Forms.Timer CheckSelectedDevice_Timer;
         private System.Windows.Forms.Label MessageStatus;
         private System.Windows.Forms.ListView deviceList;
+        private System.Windows.Forms.Label label3;
     }
 }
 

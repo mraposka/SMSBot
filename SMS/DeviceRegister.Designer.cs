@@ -57,7 +57,7 @@
             this.sendSMSToolStripMenuItem.Name = "sendSMSToolStripMenuItem";
             this.sendSMSToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.sendSMSToolStripMenuItem.Text = "Send SMS";
-            this.sendSMSToolStripMenuItem.Click += new System.EventHandler(this.sendSMSToolStripMenuItem_Click);
+            this.sendSMSToolStripMenuItem.Click += new System.EventHandler(this.SendSMSToolStripMenuItem_Click);
             // 
             // DeviceNameLabel
             // 
@@ -139,7 +139,7 @@
             this.deviceList.TabIndex = 24;
             this.deviceList.UseCompatibleStateImageBehavior = false;
             this.deviceList.View = System.Windows.Forms.View.List;
-            this.deviceList.SelectedIndexChanged += new System.EventHandler(this.deviceList_SelectedIndexChanged);
+            this.deviceList.SelectedIndexChanged += new System.EventHandler(this.DeviceList_SelectedIndexChanged);
             this.deviceList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.deviceList_MouseDoubleClick);
             // 
             // DeviceRegister

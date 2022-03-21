@@ -16,11 +16,9 @@ namespace SMS
     public partial class MainPage : Form
     {
         //Variables
-        Variables vars = new Variables();
-        List<string> deviceIdWithImei = new List<string>();
-        List<string> devices = new List<string>();
-        Process getDeviceIdProcess = new Process();
-        Process imeiProcess = new Process();
+        private readonly Variables vars = new Variables(); 
+        private readonly Process getDeviceIdProcess = new Process();
+        private readonly Process imeiProcess = new Process();
         int deviceControl = 0;
         //Variables
         public MainPage()
@@ -149,6 +147,7 @@ namespace SMS
         } 
         private void NumbersListBox_DoubleClick(object sender, EventArgs e)
         {
+            NumbersListBox.Items.Clear();
             string itemToDel = NumbersListBox.SelectedItem.ToString();
             vars.deleteLineFromTxt(vars.savedNumbersPath, itemToDel);
             GetNumbersList();
@@ -161,19 +160,20 @@ namespace SMS
             {
                 for (int i = 0; i < processNumber; i++)
                 {
-                    string output = vars.SendMessage(deviceList.SelectedItems[0].ToString().Split('-')[0].Split(':')[1], NumbersListBox.Items[i].ToString(), MessageText.Text);
+                    string output = vars.SendMessage(deviceList.SelectedItems[0].Text.Split('-')[0].Split(':')[1], NumbersListBox.Items[i].ToString(), MessageText.Text);
                     if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
                     {
-                        succesProcess++;
-                        if (i == processNumber - 1)
-                        {
-                            //Webe başarılı olduğu logu gönderilecek
-                            MessageStatus.Text = succesProcess.ToString() + " message sent " + DateTime.Now.ToString("HH:mm");
-                        }
+                        //Webe başarılı olduğu logu gönderilecek
+                        succesProcess++; 
                     }
                     else
                     {
                         //Webe başarısız olduğu logu gönderilecek
+                    }
+                    if (i == processNumber - 1)
+                    {
+                        //Webe başarılı olduğu logu gönderilecek
+                        MessageStatus.Text = succesProcess.ToString() + " message sent " + DateTime.Now.ToString("HH:mm");
                     }
                 }
             }
@@ -195,8 +195,7 @@ namespace SMS
         {
             if (deviceList.SelectedItems.Count > 0 && !String.IsNullOrEmpty(MessageText.Text) && !String.IsNullOrEmpty(MessageText.Text))
             {
-                string output = vars.SendMessage(deviceList.SelectedItems[0].ToString().Split('-')[0].Split(':')[1], NumbersListBox.SelectedItem.ToString(), MessageText.Text);
-                NumberText.Text = output;
+                string output = vars.SendMessage(deviceList.SelectedItems[0].Text.Split('-')[0].Split(':')[1], NumbersListBox.SelectedItem.ToString(), MessageText.Text);
                 if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
                 {
                     MessageStatus.Text = "Message sent " + DateTime.Now.ToString("HH:mm");

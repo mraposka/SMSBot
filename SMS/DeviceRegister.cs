@@ -14,11 +14,11 @@ namespace SMS
 {
     public partial class DeviceRegister : Form
     {
-        Variables vars = new Variables();
-        List<string> deviceIdWithImei = new List<string>();
-        List<string> devices = new List<string>();
-        Process getDeviceIdProcess = new Process();
-        Process imeiProcess = new Process();
+        private readonly Variables vars = new Variables();
+        private readonly List<string> deviceIdWithImei = new List<string>();
+        private List<string> devices = new List<string>();
+        readonly Process getDeviceIdProcess = new Process();
+        readonly Process imeiProcess = new Process();
         string selectedDeviceIdWithImei = "";
         string selectedDeviceOldName = "";
         bool changingPage = false;
@@ -157,12 +157,12 @@ namespace SMS
                 MessageBox.Show("Message quota cannot be empty");
                 return;
             }
-            string newRecord = "";
+            string newRecord;
             if (!selectedDeviceIdWithImei.Contains("-"))
             { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[0] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + "-" + textBox1.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
             else
             { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + textBox1.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
-            string[] lines = ReadAllLines(vars.savedDevicesPath);
+            //string[] lines = ReadAllLines(vars.savedDevicesPath);
             if (selectedDeviceOldName != "")
             {
                 string oldRecord = (selectedDeviceOldName + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + selectedDeviceIdWithImei.Split('-')[1]).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
@@ -221,7 +221,7 @@ namespace SMS
             }
         }
 
-        private void sendSMSToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SendSMSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
             changingPage = true;
@@ -229,7 +229,7 @@ namespace SMS
             mainPage.Show();
         }
 
-        private void deviceList_SelectedIndexChanged(object sender, EventArgs e)
+        private void DeviceList_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
