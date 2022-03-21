@@ -87,8 +87,8 @@ namespace SMS
                 {
                     for (int i = 0; i < savedDevices.Length; i++)
                     {
-                        if (deviceIdWithImei.Contains(savedDevices[i].Split(':')[1]))
-                        {
+                        if (deviceIdWithImei.Contains(savedDevices[i].Split(':')[1] + ":" + savedDevices[i].Split(':')[2].Split('-')[0]))
+                        { 
                             if (!String.IsNullOrEmpty(savedDevices[i]))
                             {
                                 MessageBox.Show(savedDevices[i] + " bağlı ve kayıtlı");
