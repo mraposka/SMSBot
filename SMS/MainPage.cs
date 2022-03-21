@@ -58,7 +58,7 @@ namespace SMS
                 {
                     if (!String.IsNullOrEmpty(lines[i]))
                     {
-                        DevicesListBox.Items.Add(lines[i]);
+                        deviceList.Items.Add(lines[i]);
                     }
                 }
             }
@@ -159,7 +159,7 @@ namespace SMS
 
         private void RefreshPictureButton_Click(object sender, EventArgs e)
         {
-            DevicesListBox.Items.Clear();
+            deviceList.Items.Clear();
             AllDeviceStatusCheck();
         }
 
@@ -209,11 +209,11 @@ namespace SMS
         {
             int processNumber = NumbersListBox.Items.Count - 1;
             int succesProcess = 0;
-            if (DevicesListBox.SelectedIndex != -1 && NumbersListBox.Items.Count > 0)
+            if (deviceList.SelectedItems.Count > 0 && NumbersListBox.Items.Count > 0)
             {
                 for (int i = 0; i < processNumber; i++)
                 {
-                    string output = vars.SendMessage(DevicesListBox.SelectedItem.ToString().Split('-')[0].Split(':')[1], NumbersListBox.Items[i].ToString(), MessageText.Text);
+                    string output = vars.SendMessage(deviceList.SelectedItems[0].ToString().Split('-')[0].Split(':')[1], NumbersListBox.Items[i].ToString(), MessageText.Text);
                     if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
                     {
                         succesProcess++;
@@ -233,7 +233,7 @@ namespace SMS
 
         private void CheckSelectedDevice_Timer_Tick(object sender, EventArgs e)
         {
-            if (DevicesListBox.SelectedIndex != -1)
+            if (deviceList.SelectedItems.Count > 0)
             {
                 Message_SendAllButton.Enabled = true;
                 Message_SendSelectedButton.Enabled = true;
@@ -247,9 +247,9 @@ namespace SMS
 
         private void Message_SendSelectedButton_Click(object sender, EventArgs e)
         {
-            if (DevicesListBox.SelectedIndex != -1 && !String.IsNullOrEmpty(MessageText.Text) && !String.IsNullOrEmpty(MessageText.Text))
+            if (deviceList.SelectedItems.Count > 0 && !String.IsNullOrEmpty(MessageText.Text) && !String.IsNullOrEmpty(MessageText.Text))
             {
-                string output = vars.SendMessage(DevicesListBox.SelectedItem.ToString().Split('-')[0].Split(':')[1], NumbersListBox.SelectedItem.ToString(), MessageText.Text);
+                string output = vars.SendMessage(deviceList.SelectedItems[0].ToString().Split('-')[0].Split(':')[1], NumbersListBox.SelectedItem.ToString(), MessageText.Text);
                 NumberText.Text = output;
                 if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
                 {

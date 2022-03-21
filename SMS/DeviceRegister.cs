@@ -29,7 +29,7 @@ namespace SMS
 
         private void LoadDevices()
         {
-            DeviceListbox.Items.Clear();
+            deviceList.Clear();
             try
             {
                 if (deviceIdWithImei.Count > 0) { deviceIdWithImei.Clear(); }
@@ -40,7 +40,7 @@ namespace SMS
                 getDeviceIdProcess.StartInfo.CreateNoWindow = true;
                 getDeviceIdProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 getDeviceIdProcess.StartInfo.Arguments = "devices";
-                getDeviceIdProcess.StartInfo.FileName = vars.adbPath+"adb.exe";
+                getDeviceIdProcess.StartInfo.FileName = vars.adbPath + "adb.exe";
                 getDeviceIdProcess.Start();
                 string output = getDeviceIdProcess.StandardOutput.ReadToEnd();
                 getDeviceIdProcess.WaitForExit();
@@ -49,7 +49,7 @@ namespace SMS
                 string[] lines = output.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);//Get all devices by dividing with new line
                 devices = lines.ToList();
 
-                devices.RemoveAt(0);//delete the first row whic is:List of attached devices(unnecessary)
+                devices.RemoveAt(0);//delete the first row which is:"List of attached devices"(unnecessary)
                 for (int i = 0; i < devices.Count; i++)
                 {
                     if (devices[i] == "" || devices[i] == " " || devices[i] == String.Empty || devices[i] == Environment.NewLine) devices.RemoveAt(i);
@@ -78,31 +78,67 @@ namespace SMS
                     }
                 }
                 //Get device's imei number
-                DeviceListbox.Items.Clear();
+                //  deviceList.Items[i].BackColor = Color.Yellow;
+                deviceList.Clear();
                 vars.DeleteBlankLinesFromTxt(vars.savedDevicesPath);
                 string[] savedDevices = ReadAllLines(vars.savedDevicesPath);
                 //listing devices
-                foreach (string device in deviceIdWithImei)
+                if (savedDevices[0] != "")
                 {
-                    if (savedDevices[0] == "")
+                    for (int i = 0; i < savedDevices.Length; i++)
                     {
-                        DeviceListbox.Items.Add(device);
-                    }
-                    else
-                    {
-                        for (int i = 0; i < savedDevices.Length; i++)
+                        if (deviceIdWithImei.Contains(savedDevices[i].Split(':')[1]))
                         {
-                            if (savedDevices[i].Split('-')[0].Split(':')[1] + ":" + savedDevices[i].Split('-')[0].Split(':')[2] != device)
+                            if (!String.IsNullOrEmpty(savedDevices[i]))
                             {
-                                DeviceListbox.Items.Add(device);
+                                MessageBox.Show(savedDevices[i] + " bağlı ve kayıtlı");
+                                deviceList.Items.Add(savedDevices[i]);
+                                deviceList.Items[deviceList.Items.Count - 1].BackColor = Color.Green;
                             }
-                            else
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrEmpty(savedDevices[i]))
                             {
-                                DeviceListbox.Items.Add(savedDevices[i]);
+                                deviceList.Items.Add(savedDevices[i]);
+                                deviceList.Items[deviceList.Items.Count - 1].BackColor = Color.Red;
                             }
                         }
                     }
                 }
+                else
+                {
+                    foreach (string device in deviceIdWithImei)
+                    {
+                        if (!String.IsNullOrEmpty(device))
+                        {
+                            deviceList.Items.Add(device);
+                            deviceList.Items[deviceList.Items.Count - 1].BackColor = Color.Yellow;
+                        }
+                    }
+                }
+
+                //foreach (string device in deviceIdWithImei)
+                //{
+                //    if (savedDevices[0] == "")
+                //    {
+                //        DeviceListbox.Items.Add(device);
+                //    }
+                //    else
+                //    {
+                //        for (int i = 0; i < savedDevices.Length; i++)
+                //        {
+                //            if (savedDevices[i].Split('-')[0].Split(':')[1] + ":" + savedDevices[i].Split('-')[0].Split(':')[2] != device)
+                //            {
+                //                DeviceListbox.Items.Add(device);
+                //            }
+                //            else
+                //            {
+                //                DeviceListbox.Items.Add(savedDevices[i]);
+                //            }
+                //        }
+                //    }
+                //}
                 //listing devices
             }
             catch { }
@@ -152,7 +188,7 @@ namespace SMS
             string[] lines = ReadAllLines(vars.savedDevicesPath);
             if (selectedDeviceOldName != "")
             {
-                string oldRecord = (selectedDeviceOldName + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + selectedDeviceIdWithImei.Split('-')[1]).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");  
+                string oldRecord = (selectedDeviceOldName + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + selectedDeviceIdWithImei.Split('-')[1]).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
                 LineChanger(newRecord, vars.savedDevicesPath, oldRecord);
             }
             else
@@ -207,11 +243,20 @@ namespace SMS
                 File.Delete(tempFileName);
             }
         }
-        private void DeviceListbox_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void sendSMSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            changingPage = true;
+            MainPage mainPage = new MainPage();
+            mainPage.Show();
+        }
+
+        private void deviceList_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                selectedDeviceIdWithImei = DeviceListbox.SelectedItem.ToString();
+                selectedDeviceIdWithImei = deviceList.SelectedItems[0].Text;
                 string deviceId = selectedDeviceIdWithImei.Split('-')[0].Split(':')[1];
                 string[] lines = File.ReadAllLines(vars.savedDevicesPath);
                 for (int i = 0; i < lines.Length; i++)
@@ -225,19 +270,6 @@ namespace SMS
                 }
             }
             catch { }
-        }
-
-        private void sendSMSToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            changingPage = true;
-            MainPage mainPage = new MainPage();
-            mainPage.Show();
-        }
-
-        private void setMessageQuotaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

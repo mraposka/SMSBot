@@ -32,12 +32,12 @@
             this.sendSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeviceNameLabel = new System.Windows.Forms.Label();
             this.DeviceNameText = new System.Windows.Forms.TextBox();
-            this.DeviceListbox = new System.Windows.Forms.ListBox();
             this.SaveButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.RefreshButton = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.deviceList = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RefreshButton)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +48,7 @@
             this.sendSMSToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(393, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(394, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -75,17 +75,6 @@
             this.DeviceNameText.Name = "DeviceNameText";
             this.DeviceNameText.Size = new System.Drawing.Size(152, 20);
             this.DeviceNameText.TabIndex = 2;
-            // 
-            // DeviceListbox
-            // 
-            this.DeviceListbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.DeviceListbox.FormattingEnabled = true;
-            this.DeviceListbox.ItemHeight = 16;
-            this.DeviceListbox.Location = new System.Drawing.Point(12, 56);
-            this.DeviceListbox.Name = "DeviceListbox";
-            this.DeviceListbox.Size = new System.Drawing.Size(370, 100);
-            this.DeviceListbox.TabIndex = 4;
-            this.DeviceListbox.SelectedIndexChanged += new System.EventHandler(this.DeviceListbox_SelectedIndexChanged);
             // 
             // SaveButton
             // 
@@ -115,9 +104,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RefreshButton.BackColor = System.Drawing.Color.Transparent;
             this.RefreshButton.ImageLocation = "C:\\Users\\Win\\source\\repos\\SMS\\SMS\\refresh.png";
-            this.RefreshButton.Location = new System.Drawing.Point(355, 27);
+            this.RefreshButton.Location = new System.Drawing.Point(359, 31);
             this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(24, 26);
+            this.RefreshButton.Size = new System.Drawing.Size(22, 22);
             this.RefreshButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.RefreshButton.TabIndex = 21;
             this.RefreshButton.TabStop = false;
@@ -140,18 +129,29 @@
             this.label1.TabIndex = 22;
             this.label1.Text = "Quota";
             // 
+            // deviceList
+            // 
+            this.deviceList.HideSelection = false;
+            this.deviceList.Location = new System.Drawing.Point(15, 56);
+            this.deviceList.Name = "deviceList";
+            this.deviceList.Size = new System.Drawing.Size(366, 100);
+            this.deviceList.TabIndex = 24;
+            this.deviceList.UseCompatibleStateImageBehavior = false;
+            this.deviceList.View = System.Windows.Forms.View.List;
+            this.deviceList.SelectedIndexChanged += new System.EventHandler(this.deviceList_SelectedIndexChanged);
+            // 
             // DeviceRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(393, 225);
+            this.ClientSize = new System.Drawing.Size(394, 221);
+            this.Controls.Add(this.deviceList);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.SaveButton);
-            this.Controls.Add(this.DeviceListbox);
             this.Controls.Add(this.DeviceNameText);
             this.Controls.Add(this.DeviceNameLabel);
             this.Controls.Add(this.menuStrip1);
@@ -176,11 +176,11 @@
         private System.Windows.Forms.ToolStripMenuItem sendSMSToolStripMenuItem;
         private System.Windows.Forms.Label DeviceNameLabel;
         private System.Windows.Forms.TextBox DeviceNameText;
-        private System.Windows.Forms.ListBox DeviceListbox;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox RefreshButton;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListView deviceList;
     }
 }
