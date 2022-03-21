@@ -133,12 +133,14 @@
             // 
             this.deviceList.HideSelection = false;
             this.deviceList.Location = new System.Drawing.Point(15, 56);
+            this.deviceList.MultiSelect = false;
             this.deviceList.Name = "deviceList";
             this.deviceList.Size = new System.Drawing.Size(366, 100);
             this.deviceList.TabIndex = 24;
             this.deviceList.UseCompatibleStateImageBehavior = false;
             this.deviceList.View = System.Windows.Forms.View.List;
             this.deviceList.SelectedIndexChanged += new System.EventHandler(this.deviceList_SelectedIndexChanged);
+            this.deviceList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.deviceList_MouseDoubleClick);
             // 
             // DeviceRegister
             // 

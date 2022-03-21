@@ -21,7 +21,7 @@ namespace SMS
         List<string> devices = new List<string>();
         Process getDeviceIdProcess = new Process();
         Process imeiProcess = new Process();
-        bool deviceControl = false;
+        int deviceControl = 0;
         //Variables
         public MainPage()
         {
@@ -31,7 +31,7 @@ namespace SMS
         private void AllDeviceStatusCheck()
         {
             string[] lines = File.ReadAllLines(vars.savedDevicesPath);
-
+            deviceControl = 0;
             for (int i = 0; i < lines.Length; i++)
             {
                 if (!String.IsNullOrEmpty(lines[i]))
@@ -42,14 +42,13 @@ namespace SMS
                     if (!CheckDeviceId(deviceImei, deviceId))
                     {
                         MessageBox.Show(deviceName + "'s id seems changed. If it's not plugged in connect " + deviceName + " or update device id on registering page.");
-                        deviceControl = false;
-                        i = 999;//breaking the loop(controlling with loop variable)
+                        deviceControl = -1; 
                     }
-                    else if (i == lines.Length - 1 && !deviceControl)
-                    { deviceControl = true; }
+                    else if (i == lines.Length - 1 && deviceControl==0)
+                    { deviceControl = 1; }
                 }
             }
-            if (deviceControl)
+            if (deviceControl==1)
             {
                 StatusLabel.Text = "OK";
                 Message_SendAllButton.Enabled = true;
@@ -92,41 +91,10 @@ namespace SMS
 
         private void GetNumbersList()
         {
-            string[] lines = ReadTxtFile(vars.savedNumbersPath);
+            string[] lines = vars.ReadTxtFile(vars.savedNumbersPath);
             foreach (string line in lines)
                 NumbersListBox.Items.Add(line);
-        }
-
-        private string[] ReadTxtFile(string file)
-        {
-            string[] lines;
-            using (StreamReader streamReader = new StreamReader(file))
-            {
-                lines = streamReader.ReadToEnd().Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                streamReader.Close();
-            }
-            return lines;
-        }
-
-        private string[] DeleteFromArr(string[] arr, string del)
-        {
-            List<string> tempList = arr.ToList();
-            tempList.Remove(del);
-            return tempList.ToArray();
-        }
-
-        private string[] AddToArr(string[] arr, string add)
-        {
-            List<string> tempList = arr.ToList();
-            tempList.Add(add);
-            return tempList.ToArray();
-        }
-
-        static void DelFile(string file)
-        {
-            File.Delete(file);
-        }
-
+        }   
         //Functions
 
         //Events 
@@ -168,8 +136,8 @@ namespace SMS
             if (!NumbersListBox.Items.Contains(NumberText.Text) && !String.IsNullOrEmpty(NumberText.Text))
             {
                 NumbersListBox.Items.Add(NumberText.Text);
-                string[] lines = ReadTxtFile(vars.savedNumbersPath);
-                string[] newLines = AddToArr(lines, NumberText.Text);
+                string[] lines = vars.ReadTxtFile(vars.savedNumbersPath);
+                string[] newLines = vars.AddToArr(lines, NumberText.Text);
                 using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
                 {
                     foreach (string line in newLines)
@@ -188,21 +156,8 @@ namespace SMS
         private void NumbersListBox_DoubleClick(object sender, EventArgs e)
         {
             string itemToDel = NumbersListBox.SelectedItem.ToString();
-            string[] lines;
-            string[] newLines;
-            NumbersListBox.Items.Remove(itemToDel);
-            lines = ReadTxtFile(vars.savedNumbersPath);
-            newLines = DeleteFromArr(lines, itemToDel);
-            Task thread1 = Task.Factory.StartNew(() => DelFile(vars.savedNumbersPath));
-            Task.WaitAll(thread1);
-            using (StreamWriter streamWriter = new StreamWriter(vars.savedNumbersPath))
-            {
-                foreach (string line in newLines)
-                    streamWriter.WriteLine(line);
-
-                streamWriter.Close();
-            }
-            vars.DeleteBlankLinesFromTxt(vars.savedNumbersPath);
+            vars.deleteLineFromTxt(vars.savedNumbersPath, itemToDel);
+            GetNumbersList();
         }
 
         private void Message_SendAllButton_Click(object sender, EventArgs e)

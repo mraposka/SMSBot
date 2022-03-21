@@ -117,29 +117,6 @@ namespace SMS
                         }
                     }
                 }
-
-                //foreach (string device in deviceIdWithImei)
-                //{
-                //    if (savedDevices[0] == "")
-                //    {
-                //        DeviceListbox.Items.Add(device);
-                //    }
-                //    else
-                //    {
-                //        for (int i = 0; i < savedDevices.Length; i++)
-                //        {
-                //            if (savedDevices[i].Split('-')[0].Split(':')[1] + ":" + savedDevices[i].Split('-')[0].Split(':')[2] != device)
-                //            {
-                //                DeviceListbox.Items.Add(device);
-                //            }
-                //            else
-                //            {
-                //                DeviceListbox.Items.Add(savedDevices[i]);
-                //            }
-                //        }
-                //    }
-                //}
-                //listing devices
             }
             catch { }
         }
@@ -270,6 +247,14 @@ namespace SMS
                 }
             }
             catch { }
+        }
+
+        private void deviceList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string itemToDel = deviceList.SelectedItems[0].Text;
+            MessageBox.Show(itemToDel);
+            vars.deleteLineFromTxt(vars.savedDevicesPath,itemToDel);
+            deviceList.Items[deviceList.SelectedItems[0].Index].Remove();
         }
     }
 }

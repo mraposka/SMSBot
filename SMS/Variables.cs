@@ -91,6 +91,52 @@ namespace SMS
             p.Start(); 
             return p.StandardOutput.ReadToEnd();
         }
+        public void deleteLineFromTxt(string file,string _itemToDel)
+        {
+            string itemToDel = _itemToDel;
+            string[] lines;
+            string[] newLines; 
+            lines = ReadTxtFile(file);
+            newLines = DeleteFromArr(lines, itemToDel);
+            Task thread1 = Task.Factory.StartNew(() => DelFile(file));
+            Task.WaitAll(thread1);
+            using (StreamWriter streamWriter = new StreamWriter(file))
+            {
+                foreach (string line in newLines)
+                    streamWriter.WriteLine(line);
+
+                streamWriter.Close();
+            }
+            DeleteBlankLinesFromTxt(file);
+        }
+        public string[] ReadTxtFile(string file)
+        {
+            string[] lines;
+            using (StreamReader streamReader = new StreamReader(file))
+            {
+                lines = streamReader.ReadToEnd().Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                streamReader.Close();
+            }
+            return lines;
+        } 
+        public string[] DeleteFromArr(string[] arr, string del)
+        {
+            List<string> tempList = arr.ToList();
+            tempList.Remove(del);
+            return tempList.ToArray();
+        }
+
+        public string[] AddToArr(string[] arr, string add)
+        {
+            List<string> tempList = arr.ToList();
+            tempList.Add(add);
+            return tempList.ToArray();
+        }
+
+        public void DelFile(string file)
+        {
+            File.Delete(file);
+        }
         //Functions
     }
 }

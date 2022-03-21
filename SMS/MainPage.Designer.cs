@@ -254,6 +254,7 @@
             // 
             this.deviceList.HideSelection = false;
             this.deviceList.Location = new System.Drawing.Point(23, 40);
+            this.deviceList.MultiSelect = false;
             this.deviceList.Name = "deviceList";
             this.deviceList.Size = new System.Drawing.Size(273, 329);
             this.deviceList.TabIndex = 21;
