@@ -67,7 +67,7 @@ namespace SMS
                 Message_SendAllButton.Enabled = false;
                 Message_SendSelectedButton.Enabled = false;
             }
-        }
+        } 
         private bool CheckDeviceId(string imei, string id)
         {
             imeiProcess.StartInfo.UseShellExecute = false;
@@ -87,7 +87,7 @@ namespace SMS
                 return true;
             else
                 return false;
-        } 
+        }
         private void GetNumbersList()
         {
             string[] lines = vars.ReadTxtFile(vars.savedNumbersPath);
