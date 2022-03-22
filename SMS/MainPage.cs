@@ -16,7 +16,7 @@ namespace SMS
     public partial class MainPage : Form
     {
         //Variables
-        private readonly Variables vars = new Variables(); 
+        private readonly Variables vars = new Variables();
         private readonly Process getDeviceIdProcess = new Process();
         private readonly Process imeiProcess = new Process();
         int deviceControl = 0;
@@ -40,13 +40,13 @@ namespace SMS
                     if (!CheckDeviceId(deviceImei, deviceId))
                     {
                         MessageBox.Show(deviceName + "'s id seems changed. If it's not plugged in connect " + deviceName + " or update device id on registering page.");
-                        deviceControl = -1; 
+                        deviceControl = -1;
                     }
-                    else if (i == lines.Length - 1 && deviceControl==0)
+                    else if (i == lines.Length - 1 && deviceControl == 0)
                     { deviceControl = 1; }
                 }
             }
-            if (deviceControl==1)
+            if (deviceControl == 1)
             {
                 StatusLabel.Text = "OK";
                 Message_SendAllButton.Enabled = true;
@@ -65,7 +65,7 @@ namespace SMS
                 Message_SendAllButton.Enabled = false;
                 Message_SendSelectedButton.Enabled = false;
             }
-        } 
+        }
         private bool CheckDeviceId(string imei, string id)
         {
             imeiProcess.StartInfo.UseShellExecute = false;
@@ -91,7 +91,7 @@ namespace SMS
             string[] lines = vars.ReadTxtFile(vars.savedNumbersPath);
             foreach (string line in lines)
                 NumbersListBox.Items.Add(line);
-        }   
+        }
         //Functions
 
         //Events 
@@ -100,13 +100,13 @@ namespace SMS
             AllDeviceStatusCheck();
             GetNumbersList();
             CheckSelectedDevice_Timer.Start();
-        } 
+        }
         private void DeviceRegistiraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
             DeviceRegister registerForm = new DeviceRegister();
             registerForm.ShowDialog();
-        } 
+        }
         private void MainPage_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
@@ -118,12 +118,14 @@ namespace SMS
                 }
             }
             catch { }
-        } 
+        }
         private void RefreshPictureButton_Click(object sender, EventArgs e)
         {
             deviceList.Items.Clear();
             AllDeviceStatusCheck();
-        } 
+            NumbersListBox.Items.Clear();
+            GetNumbersList();
+        }
         private void Number_AddToListButton_Click(object sender, EventArgs e)
         {
             if (!NumbersListBox.Items.Contains(NumberText.Text) && !String.IsNullOrEmpty(NumberText.Text))
@@ -144,17 +146,58 @@ namespace SMS
                 MessageBox.Show("\"" + NumberText.Text + "\" is already in \"Numbers\" list");
             }
             NumberText.Clear();
-        } 
+        }
         private void NumbersListBox_DoubleClick(object sender, EventArgs e)
         {
             NumbersListBox.Items.Clear();
             string itemToDel = NumbersListBox.SelectedItem.ToString();
             vars.deleteLineFromTxt(vars.savedNumbersPath, itemToDel);
             GetNumbersList();
-        } 
+        }
         private void Message_SendAllButton_Click(object sender, EventArgs e)
         {
-            int processNumber = NumbersListBox.Items.Count - 1;
+            if (NumbersListBox.Items.Count == 0||String.IsNullOrEmpty(MessageText.Text))
+                return;
+
+            List<string> deviceId = new List<string>();
+            List<int> deviceQuota = new List<int>();
+            for (int i = 0; i < deviceList.Items.Count - 1; i++)
+            {
+                string device = deviceList.Items[i].Text;
+                deviceId.Add(device.Split('-')[0].Split(':')[1]);
+                deviceQuota.Add(Int16.Parse(device.Split('-')[1]));
+            }
+            int quota = deviceQuota.Sum();
+            int process = NumbersListBox.Items.Count;
+            int numbers = 0;
+            if (quota < process)
+            {
+                MessageBox.Show("Last " + (process - quota).ToString() + " messages going to fail. There is not enough quota.");
+            }
+            for (int i = 0; i < deviceId.Count - 1; i++)
+            {
+                for (int j = 0; j < deviceQuota.Count - 1; j++)
+                {
+                    /*string output = vars.SendMessage(deviceId[i], NumbersListBox.Items[numbers].ToString(), MessageText.Text);
+                    if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
+                    {
+                        //Webe başarılı olduğu logu gönderilecek 
+                    }
+                    else
+                    {
+                        //Webe başarısız olduğu logu gönderilecek
+                    }*/
+                    numbers++;
+                    deviceQuota[j]--;
+                }
+            }
+            List<string> lines = new List<string>();
+            for (int i = 0; i < deviceId.Count - 1; i++)
+                lines.Add(deviceId[i] + "-" + deviceQuota[i].ToString());
+
+            foreach (string line in lines)
+                MessageBox.Show(line);
+            /*int processNumber = NumbersListBox.Items.Count - 1;
             int succesProcess = 0;
             if (deviceList.SelectedItems.Count > 0 && NumbersListBox.Items.Count > 0)
             {
@@ -176,8 +219,8 @@ namespace SMS
                         MessageStatus.Text = succesProcess.ToString() + " message sent " + DateTime.Now.ToString("HH:mm");
                     }
                 }
-            }
-        } 
+            }*/
+        }
         private void CheckSelectedDevice_Timer_Tick(object sender, EventArgs e)
         {
             if (deviceList.SelectedItems.Count > 0)
@@ -190,7 +233,7 @@ namespace SMS
                 Message_SendAllButton.Enabled = false;
                 Message_SendSelectedButton.Enabled = false;
             }
-        } 
+        }
         private void Message_SendSelectedButton_Click(object sender, EventArgs e)
         {
             if (deviceList.SelectedItems.Count > 0 && !String.IsNullOrEmpty(MessageText.Text) && !String.IsNullOrEmpty(MessageText.Text))
@@ -201,7 +244,7 @@ namespace SMS
                     MessageStatus.Text = "Message sent " + DateTime.Now.ToString("HH:mm");
                 }
             }
-        } 
+        }
         //Events 
 
 
