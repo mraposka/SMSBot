@@ -90,7 +90,7 @@ namespace SMS
         {
             string[] lines = vars.ReadTxtFile(vars.savedNumbersPath);
             foreach (string line in lines)
-                NumbersListBox.Items.Add(line);
+                if (!String.IsNullOrEmpty(line)) NumbersListBox.Items.Add(line);
         }
         //Functions
 
@@ -100,12 +100,6 @@ namespace SMS
             AllDeviceStatusCheck();
             GetNumbersList();
             CheckSelectedDevice_Timer.Start();
-        }
-        private void DeviceRegistiraToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            DeviceRegister registerForm = new DeviceRegister();
-            registerForm.ShowDialog();
         }
         private void MainPage_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -149,19 +143,36 @@ namespace SMS
         }
         private void NumbersListBox_DoubleClick(object sender, EventArgs e)
         {
-            NumbersListBox.Items.Clear();
             string itemToDel = NumbersListBox.SelectedItem.ToString();
             vars.deleteLineFromTxt(vars.savedNumbersPath, itemToDel);
+            NumbersListBox.Items.Clear();
             GetNumbersList();
         }
-        private void Message_SendAllButton_Click(object sender, EventArgs e)
+        Task X(List<string> deviceId, int i, int numbers)
         {
-            if (NumbersListBox.Items.Count == 0||String.IsNullOrEmpty(MessageText.Text))
+            System.Threading.Thread.Sleep(Int16.Parse(NumberText.Text));
+            return Task.Run(() =>
+            {
+                string output = vars.SendMessage(deviceId[i], NumbersListBox.Items[numbers].ToString(), MessageText.Text);
+                if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
+                {
+                    //Webe başarılı olduğu logu gönderilecek 
+                    //MessageBox.Show(NumbersListBox.Items[numbers].ToString(), MessageText.Text);
+                }
+                else
+                { 
+                    //Webe başarısız olduğu logu gönderilecek
+                }
+            });
+        }
+        private async void Message_SendAllButton_Click(object sender, EventArgs e)
+        {
+            if (NumbersListBox.Items.Count == 0 || String.IsNullOrEmpty(MessageText.Text))
                 return;
 
             List<string> deviceId = new List<string>();
             List<int> deviceQuota = new List<int>();
-            for (int i = 0; i < deviceList.Items.Count - 1; i++)
+            for (int i = 0; i < deviceList.Items.Count; i++)
             {
                 string device = deviceList.Items[i].Text;
                 deviceId.Add(device.Split('-')[0].Split(':')[1]);
@@ -174,29 +185,39 @@ namespace SMS
             {
                 MessageBox.Show("Last " + (process - quota).ToString() + " messages going to fail. There is not enough quota.");
             }
-            for (int i = 0; i < deviceId.Count - 1; i++)
+            for (int i = 0; i < deviceId.Count; i++)
             {
-                for (int j = 0; j < deviceQuota.Count - 1; j++)
+                int selectedDeviceQuota = deviceQuota[i];
+                for (int j = 0; j < selectedDeviceQuota; j++)
                 {
-                    /*string output = vars.SendMessage(deviceId[i], NumbersListBox.Items[numbers].ToString(), MessageText.Text);
-                    if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
-                    {
-                        //Webe başarılı olduğu logu gönderilecek 
-                    }
-                    else
-                    {
-                        //Webe başarısız olduğu logu gönderilecek
-                    }*/
-                    numbers++;
-                    deviceQuota[j]--;
+                    if (numbers == process)
+                    { break; }
+                    Task.WaitAll(X(deviceId, i, numbers));
+                    ++numbers;
+                    --deviceQuota[i];
                 }
             }
             List<string> lines = new List<string>();
-            for (int i = 0; i < deviceId.Count - 1; i++)
-                lines.Add(deviceId[i] + "-" + deviceQuota[i].ToString());
-
+            for (int i = 0; i < deviceId.Count; i++)
+            {
+                string _deviceId = deviceId[i];
+                string _deviceQuota = deviceQuota[i].ToString();
+                for (int j = 0; j < deviceList.Items.Count; j++)
+                {
+                    string deviceOnList = deviceList.Items[j].Text;
+                    deviceOnList = deviceOnList.Split('-')[0].Split(':')[1];
+                    if (_deviceId == deviceOnList)
+                    {
+                        lines.Add(deviceList.Items[j].Text + "/" + deviceList.Items[j].Text.Split('-')[0] + "-" + _deviceQuota);
+                        break;
+                    }
+                }
+            }
             foreach (string line in lines)
                 MessageBox.Show(line);
+
+
+
             /*int processNumber = NumbersListBox.Items.Count - 1;
             int succesProcess = 0;
             if (deviceList.SelectedItems.Count > 0 && NumbersListBox.Items.Count > 0)
@@ -244,6 +265,12 @@ namespace SMS
                     MessageStatus.Text = "Message sent " + DateTime.Now.ToString("HH:mm");
                 }
             }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            DeviceRegister registerForm = new DeviceRegister();
+            registerForm.ShowDialog();
         }
         //Events 
 

@@ -80,15 +80,17 @@ namespace SMS
         }
         public string SendMessage(string sender, string phoneNumber, string message)
         {
-            string command = "/c "+_adbPath+"adb.exe -s " + sender + " shell service call isms 7 i32 1 s16 \"com.android.internal.telephony.ISms\" s16 \"" + phoneNumber + "\" s16 \"null\" s16 \"" + message.Replace(" ","\\ ") + "\" s16 \"null\" s16 \"null\"";
+            //System.Threading.Thread.Sleep(1000);
+            string command = "/c " + _adbPath + "adb.exe -s " + sender + " shell service call isms 7 i32 1 s16 \"com.android.internal.telephony.ISms\" s16 \"" + phoneNumber + "\" s16 \"null\" s16 \"" + message.Replace(" ", "\\ ") + "\" s16 \"null\" s16 \"null\"";
             Process p = new Process();
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.CreateNoWindow = false;
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.Arguments =  command; 
-            p.Start(); 
+            p.StartInfo.Arguments = command;
+            p.Start();
+            p.WaitForExit();
             return p.StandardOutput.ReadToEnd();
         }
         public void deleteLineFromTxt(string file,string _itemToDel)
