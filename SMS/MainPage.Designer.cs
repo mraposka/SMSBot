@@ -39,11 +39,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.Message_SendAllButton = new System.Windows.Forms.Button();
             this.Message_SendSelectedButton = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.DeviceStatusTextLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.quotaLabel = new System.Windows.Forms.Label();
+            this.QuotaTextLabel = new System.Windows.Forms.Label();
             this.DeviceRegisterButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.SendStatusTextLabel = new System.Windows.Forms.Label();
             this.deviceList = new System.Windows.Forms.ListView();
             this.MessageStatus = new System.Windows.Forms.Label();
             this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
@@ -154,15 +156,15 @@
             this.Message_SendSelectedButton.UseVisualStyleBackColor = true;
             this.Message_SendSelectedButton.Click += new System.EventHandler(this.Message_SendSelectedButton_Click);
             // 
-            // label7
+            // DeviceStatusTextLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label7.Location = new System.Drawing.Point(20, 191);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(111, 18);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Devices Status:";
+            this.DeviceStatusTextLabel.AutoSize = true;
+            this.DeviceStatusTextLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.DeviceStatusTextLabel.Location = new System.Drawing.Point(20, 191);
+            this.DeviceStatusTextLabel.Name = "DeviceStatusTextLabel";
+            this.DeviceStatusTextLabel.Size = new System.Drawing.Size(111, 18);
+            this.DeviceStatusTextLabel.TabIndex = 18;
+            this.DeviceStatusTextLabel.Text = "Devices Status:";
             // 
             // StatusLabel
             // 
@@ -184,8 +186,10 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.quotaLabel);
+            this.splitContainer1.Panel1.Controls.Add(this.QuotaTextLabel);
             this.splitContainer1.Panel1.Controls.Add(this.DeviceRegisterButton);
-            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.SendStatusTextLabel);
             this.splitContainer1.Panel1.Controls.Add(this.deviceList);
             this.splitContainer1.Panel1.Controls.Add(this.Number_AddToListButton);
             this.splitContainer1.Panel1.Controls.Add(this.MessageStatus);
@@ -194,7 +198,7 @@
             this.splitContainer1.Panel1.Controls.Add(this.DevicesLabel);
             this.splitContainer1.Panel1.Controls.Add(this.RefreshPictureButton);
             this.splitContainer1.Panel1.Controls.Add(this.NumbersListBox);
-            this.splitContainer1.Panel1.Controls.Add(this.label7);
+            this.splitContainer1.Panel1.Controls.Add(this.DeviceStatusTextLabel);
             this.splitContainer1.Panel1.Controls.Add(this.StatusLabel);
             this.splitContainer1.Panel1.Controls.Add(this.NumbersLabel);
             // 
@@ -204,9 +208,35 @@
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.Message_SendAllButton);
             this.splitContainer1.Panel2.Controls.Add(this.Message_SendSelectedButton);
-            this.splitContainer1.Size = new System.Drawing.Size(527, 396);
-            this.splitContainer1.SplitterDistance = 252;
+            this.splitContainer1.Size = new System.Drawing.Size(527, 422);
+            this.splitContainer1.SplitterDistance = 279;
             this.splitContainer1.TabIndex = 21;
+            // 
+            // quotaLabel
+            // 
+            this.quotaLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.quotaLabel.AutoSize = true;
+            this.quotaLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.quotaLabel.Location = new System.Drawing.Point(81, 247);
+            this.quotaLabel.Name = "quotaLabel";
+            this.quotaLabel.Size = new System.Drawing.Size(30, 18);
+            this.quotaLabel.TabIndex = 25;
+            this.quotaLabel.Text = "Idle";
+            // 
+            // QuotaTextLabel
+            // 
+            this.QuotaTextLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.QuotaTextLabel.AutoSize = true;
+            this.QuotaTextLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.QuotaTextLabel.Location = new System.Drawing.Point(20, 247);
+            this.QuotaTextLabel.Name = "QuotaTextLabel";
+            this.QuotaTextLabel.Size = new System.Drawing.Size(53, 18);
+            this.QuotaTextLabel.TabIndex = 24;
+            this.QuotaTextLabel.Text = "Quota:";
             // 
             // DeviceRegisterButton
             // 
@@ -219,18 +249,18 @@
             this.DeviceRegisterButton.UseVisualStyleBackColor = true;
             this.DeviceRegisterButton.Click += new System.EventHandler(this.DeviceRegistirationButton);
             // 
-            // label3
+            // SendStatusTextLabel
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.SendStatusTextLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(20, 221);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 18);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Sending Status:";
+            this.SendStatusTextLabel.AutoSize = true;
+            this.SendStatusTextLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.SendStatusTextLabel.Location = new System.Drawing.Point(20, 221);
+            this.SendStatusTextLabel.Name = "SendStatusTextLabel";
+            this.SendStatusTextLabel.Size = new System.Drawing.Size(111, 18);
+            this.SendStatusTextLabel.TabIndex = 22;
+            this.SendStatusTextLabel.Text = "Sending Status:";
             // 
             // deviceList
             // 
@@ -250,7 +280,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MessageStatus.AutoSize = true;
             this.MessageStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.MessageStatus.Location = new System.Drawing.Point(151, 221);
+            this.MessageStatus.Location = new System.Drawing.Point(137, 221);
             this.MessageStatus.Name = "MessageStatus";
             this.MessageStatus.Size = new System.Drawing.Size(30, 18);
             this.MessageStatus.TabIndex = 21;
@@ -265,7 +295,7 @@
             this.RefreshPictureButton.ImageLocation = "C:\\Users\\Win\\source\\repos\\SMS\\SMS\\refresh.png";
             this.RefreshPictureButton.Location = new System.Drawing.Point(254, 9);
             this.RefreshPictureButton.Name = "RefreshPictureButton";
-            this.RefreshPictureButton.Size = new System.Drawing.Size(26, 26);
+            this.RefreshPictureButton.Size = new System.Drawing.Size(26, 24);
             this.RefreshPictureButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.RefreshPictureButton.TabIndex = 20;
             this.RefreshPictureButton.TabStop = false;
@@ -280,7 +310,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(527, 396);
+            this.ClientSize = new System.Drawing.Size(527, 422);
             this.Controls.Add(this.splitContainer1);
             this.Name = "MainPage";
             this.ShowIcon = false;
@@ -310,15 +340,17 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button Message_SendAllButton;
         private System.Windows.Forms.Button Message_SendSelectedButton;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label DeviceStatusTextLabel;
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.PictureBox RefreshPictureButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Timer CheckSelectedDevice_Timer;
         private System.Windows.Forms.Label MessageStatus;
         private System.Windows.Forms.ListView deviceList;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label SendStatusTextLabel;
         private System.Windows.Forms.Button DeviceRegisterButton;
+        private System.Windows.Forms.Label quotaLabel;
+        private System.Windows.Forms.Label QuotaTextLabel;
     }
 }
 

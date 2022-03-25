@@ -97,8 +97,11 @@ namespace SMS
         //Events 
         private void Form1_Load(object sender, EventArgs e)
         {
-            AllDeviceStatusCheck();
-            GetNumbersList();
+            RefreshDevices(); 
+            List<int> deviceQuota = new List<int>();
+            for (int i = 0; i < deviceList.Items.Count; i++) 
+                deviceQuota.Add(Int16.Parse(deviceList.Items[i].Text.Split('-')[1]));  
+            quotaLabel.Text = deviceQuota.Sum().ToString();
             CheckSelectedDevice_Timer.Start();
         }
         private void MainPage_FormClosing(object sender, FormClosingEventArgs e)
@@ -219,13 +222,11 @@ namespace SMS
         private void CheckSelectedDevice_Timer_Tick(object sender, EventArgs e)
         {
             if (deviceList.SelectedItems.Count > 0)
-            {
-                Message_SendAllButton.Enabled = true;
+            { 
                 Message_SendSelectedButton.Enabled = true;
             }
             else
-            {
-                Message_SendAllButton.Enabled = false;
+            { 
                 Message_SendSelectedButton.Enabled = false;
             }
         }
@@ -245,7 +246,7 @@ namespace SMS
             this.Hide();
             DeviceRegister registerForm = new DeviceRegister();
             registerForm.ShowDialog();
-        }
+        } 
         //Events 
 
 
