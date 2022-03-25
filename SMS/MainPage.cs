@@ -113,12 +113,16 @@ namespace SMS
             }
             catch { }
         }
-        private void RefreshPictureButton_Click(object sender, EventArgs e)
+        private void RefreshDevices()
         {
             deviceList.Items.Clear();
             AllDeviceStatusCheck();
             NumbersListBox.Items.Clear();
             GetNumbersList();
+        }
+        private void RefreshPictureButton_Click(object sender, EventArgs e)
+        {
+            RefreshDevices();
         }
         private void Number_AddToListButton_Click(object sender, EventArgs e)
         {
@@ -148,24 +152,7 @@ namespace SMS
             NumbersListBox.Items.Clear();
             GetNumbersList();
         }
-        Task X(List<string> deviceId, int i, int numbers)
-        {
-            System.Threading.Thread.Sleep(Int16.Parse(NumberText.Text));
-            return Task.Run(() =>
-            {
-                string output = vars.SendMessage(deviceId[i], NumbersListBox.Items[numbers].ToString(), MessageText.Text);
-                if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
-                {
-                    //Webe başarılı olduğu logu gönderilecek 
-                    //MessageBox.Show(NumbersListBox.Items[numbers].ToString(), MessageText.Text);
-                }
-                else
-                { 
-                    //Webe başarısız olduğu logu gönderilecek
-                }
-            });
-        }
-        private async void Message_SendAllButton_Click(object sender, EventArgs e)
+        private void Message_SendAllButton_Click(object sender, EventArgs e)
         {
             if (NumbersListBox.Items.Count == 0 || String.IsNullOrEmpty(MessageText.Text))
                 return;
@@ -179,6 +166,7 @@ namespace SMS
                 deviceQuota.Add(Int16.Parse(device.Split('-')[1]));
             }
             int quota = deviceQuota.Sum();
+            if (quota < 1) { MessageBox.Show("Quota is 0"); return; }
             int process = NumbersListBox.Items.Count;
             int numbers = 0;
             if (quota < process)
@@ -192,10 +180,21 @@ namespace SMS
                 {
                     if (numbers == process)
                     { break; }
-                    Task.WaitAll(X(deviceId, i, numbers));
+
+                    /*string output = vars.SendMessage(deviceId[i], NumbersListBox.Items[numbers].ToString(), MessageText.Text);
+                    if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
+                    {
+                        //Webe başarılı olduğu logu gönderilecek 
+                        //MessageBox.Show(NumbersListBox.Items[numbers].ToString(), MessageText.Text);
+                    }
+                    else
+                    {
+                        //Webe başarısız olduğu logu gönderilecek
+                    }*/
                     ++numbers;
                     --deviceQuota[i];
                 }
+
             }
             List<string> lines = new List<string>();
             for (int i = 0; i < deviceId.Count; i++)
@@ -214,33 +213,8 @@ namespace SMS
                 }
             }
             foreach (string line in lines)
-                MessageBox.Show(line);
-
-
-
-            /*int processNumber = NumbersListBox.Items.Count - 1;
-            int succesProcess = 0;
-            if (deviceList.SelectedItems.Count > 0 && NumbersListBox.Items.Count > 0)
-            {
-                for (int i = 0; i < processNumber; i++)
-                {
-                    string output = vars.SendMessage(deviceList.SelectedItems[0].Text.Split('-')[0].Split(':')[1], NumbersListBox.Items[i].ToString(), MessageText.Text);
-                    if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
-                    {
-                        //Webe başarılı olduğu logu gönderilecek
-                        succesProcess++; 
-                    }
-                    else
-                    {
-                        //Webe başarısız olduğu logu gönderilecek
-                    }
-                    if (i == processNumber - 1)
-                    {
-                        //Webe başarılı olduğu logu gönderilecek
-                        MessageStatus.Text = succesProcess.ToString() + " message sent " + DateTime.Now.ToString("HH:mm");
-                    }
-                }
-            }*/
+                vars.LineChanger(line.Split('/')[1], vars.savedDevicesPath, line.Split('/')[0]);
+            RefreshDevices();
         }
         private void CheckSelectedDevice_Timer_Tick(object sender, EventArgs e)
         {
@@ -257,7 +231,7 @@ namespace SMS
         }
         private void Message_SendSelectedButton_Click(object sender, EventArgs e)
         {
-            if (deviceList.SelectedItems.Count > 0 && !String.IsNullOrEmpty(MessageText.Text) && !String.IsNullOrEmpty(MessageText.Text))
+            if (deviceList.SelectedItems.Count > 0 &&  NumbersListBox.SelectedItems.Count!=0 && !String.IsNullOrEmpty(MessageText.Text))
             {
                 string output = vars.SendMessage(deviceList.SelectedItems[0].Text.Split('-')[0].Split(':')[1], NumbersListBox.SelectedItem.ToString(), MessageText.Text);
                 if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
@@ -266,7 +240,7 @@ namespace SMS
                 }
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void DeviceRegistirationButton(object sender, EventArgs e)
         {
             this.Hide();
             DeviceRegister registerForm = new DeviceRegister();

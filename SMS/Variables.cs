@@ -78,6 +78,43 @@ namespace SMS
                 File.Delete(tempFileName);
             }
         }
+        public void LineChanger(string newText, string fileName, string oldText)
+        {
+            using (StreamReader reader = new StreamReader(fileName))
+            {
+                string lines = reader.ReadToEnd();
+                reader.Close();
+                List<string> newLines = lines.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
+                newLines.Add(newText);
+                if (oldText != "") newLines.Remove(oldText);
+                File.Delete(fileName);
+                using (StreamWriter writer = new StreamWriter(fileName))
+                {
+                    foreach (string line in newLines)
+                    { writer.WriteLine(line.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "")); }
+                    writer.Close();
+                }
+            }
+            var tempFileName = Path.GetTempFileName();
+            try
+            {
+                using (var streamReader = new StreamReader(fileName))
+                using (var streamWriter = new StreamWriter(tempFileName))
+                {
+                    string line;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(line))
+                            streamWriter.WriteLine(line);
+                    }
+                }
+                File.Copy(tempFileName, fileName.Split('\\').Last(), true);
+            }
+            finally
+            {
+                File.Delete(tempFileName);
+            }
+        }
         public string SendMessage(string sender, string phoneNumber, string message)
         {
             //System.Threading.Thread.Sleep(1000);

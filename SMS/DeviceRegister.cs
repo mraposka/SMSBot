@@ -152,25 +152,25 @@ namespace SMS
                 MessageBox.Show("Device name cannot be empty");
                 return;
             }
-            else if (String.IsNullOrEmpty(textBox1.Text))
+            else if (String.IsNullOrEmpty(quotaText.Text))
             {
                 MessageBox.Show("Message quota cannot be empty");
                 return;
             }
             string newRecord;
             if (!selectedDeviceIdWithImei.Contains("-"))
-            { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[0] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + "-" + textBox1.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
+            { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[0] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + "-" + quotaText.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
             else
-            { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + textBox1.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
+            { newRecord = (DeviceNameText.Text + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + quotaText.Text).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); }
             //string[] lines = ReadAllLines(vars.savedDevicesPath);
             if (selectedDeviceOldName != "")
             {
                 string oldRecord = (selectedDeviceOldName + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[1] + ":" + selectedDeviceIdWithImei.Split('-')[0].Split(':')[2] + "-" + selectedDeviceIdWithImei.Split('-')[1]).Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
-                LineChanger(newRecord, vars.savedDevicesPath, oldRecord);
+                vars.LineChanger(newRecord, vars.savedDevicesPath, oldRecord);
             }
             else
             {
-                LineChanger(newRecord, vars.savedDevicesPath, "");
+                vars.LineChanger(newRecord, vars.savedDevicesPath, "");
             }
             selectedDeviceOldName = "";
             LoadDevices();
@@ -182,44 +182,7 @@ namespace SMS
             using (StreamReader sr = new StreamReader(fs))
             { lines = sr.ReadToEnd(); fs.Close(); sr.Close(); }
             return lines.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-        }
-        private void LineChanger(string newText, string fileName, string oldText)
-        {
-            using (StreamReader reader = new StreamReader(fileName))
-            {
-                string lines = reader.ReadToEnd();
-                reader.Close();
-                List<string> newLines = lines.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
-                newLines.Add(newText);
-                if (oldText != "") newLines.Remove(oldText);
-                File.Delete(fileName);
-                using (StreamWriter writer = new StreamWriter(fileName))
-                {
-                    foreach (string line in newLines)
-                    { writer.WriteLine(line.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "")); }
-                    writer.Close();
-                }
-            }
-            var tempFileName = Path.GetTempFileName();
-            try
-            {
-                using (var streamReader = new StreamReader(vars.savedDevicesPath))
-                using (var streamWriter = new StreamWriter(tempFileName))
-                {
-                    string line;
-                    while ((line = streamReader.ReadLine()) != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(line))
-                            streamWriter.WriteLine(line);
-                    }
-                }
-                File.Copy(tempFileName, vars.savedDevicesPath.Split('\\').Last(), true);
-            }
-            finally
-            {
-                File.Delete(tempFileName);
-            }
-        }
+        } 
 
         private void SendSMSToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -241,7 +204,7 @@ namespace SMS
                     if (!String.IsNullOrEmpty(lines[i]) && lines[i].Split('-')[0].Split(':')[1] == deviceId)
                     {
                         DeviceNameText.Text = lines[i].Split('-')[0].Split(':')[0];
-                        textBox1.Text = lines[i].Split('-')[1];
+                        quotaText.Text = lines[i].Split('-')[1];
                         selectedDeviceOldName = lines[i].Split('-')[0].Split(':')[0]; break;
                     }
                 }

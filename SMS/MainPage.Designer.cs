@@ -42,12 +42,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.deviceList = new System.Windows.Forms.ListView();
-            this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
+            this.DeviceRegisterButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.deviceList = new System.Windows.Forms.ListView();
             this.MessageStatus = new System.Windows.Forms.Label();
+            this.RefreshPictureButton = new System.Windows.Forms.PictureBox();
             this.CheckSelectedDevice_Timer = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -184,7 +184,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.DeviceRegisterButton);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.deviceList);
             this.splitContainer1.Panel1.Controls.Add(this.Number_AddToListButton);
@@ -208,16 +208,53 @@
             this.splitContainer1.SplitterDistance = 252;
             this.splitContainer1.TabIndex = 21;
             // 
+            // DeviceRegisterButton
+            // 
+            this.DeviceRegisterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.DeviceRegisterButton.Location = new System.Drawing.Point(23, 124);
+            this.DeviceRegisterButton.Name = "DeviceRegisterButton";
+            this.DeviceRegisterButton.Size = new System.Drawing.Size(252, 25);
+            this.DeviceRegisterButton.TabIndex = 23;
+            this.DeviceRegisterButton.Text = "Device Registiration";
+            this.DeviceRegisterButton.UseVisualStyleBackColor = true;
+            this.DeviceRegisterButton.Click += new System.EventHandler(this.DeviceRegistirationButton);
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.Location = new System.Drawing.Point(20, 221);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(111, 18);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Sending Status:";
+            // 
             // deviceList
             // 
             this.deviceList.HideSelection = false;
             this.deviceList.Location = new System.Drawing.Point(23, 39);
             this.deviceList.MultiSelect = false;
             this.deviceList.Name = "deviceList";
-            this.deviceList.Size = new System.Drawing.Size(230, 110);
+            this.deviceList.Size = new System.Drawing.Size(252, 110);
             this.deviceList.TabIndex = 21;
             this.deviceList.UseCompatibleStateImageBehavior = false;
             this.deviceList.View = System.Windows.Forms.View.List;
+            // 
+            // MessageStatus
+            // 
+            this.MessageStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MessageStatus.AutoSize = true;
+            this.MessageStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.MessageStatus.Location = new System.Drawing.Point(151, 221);
+            this.MessageStatus.Name = "MessageStatus";
+            this.MessageStatus.Size = new System.Drawing.Size(30, 18);
+            this.MessageStatus.TabIndex = 21;
+            this.MessageStatus.Text = "Idle";
             // 
             // RefreshPictureButton
             // 
@@ -234,46 +271,9 @@
             this.RefreshPictureButton.TabStop = false;
             this.RefreshPictureButton.Click += new System.EventHandler(this.RefreshPictureButton_Click);
             // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(20, 221);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 18);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Sending Status:";
-            // 
-            // MessageStatus
-            // 
-            this.MessageStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.MessageStatus.AutoSize = true;
-            this.MessageStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.MessageStatus.Location = new System.Drawing.Point(151, 221);
-            this.MessageStatus.Name = "MessageStatus";
-            this.MessageStatus.Size = new System.Drawing.Size(30, 18);
-            this.MessageStatus.TabIndex = 21;
-            this.MessageStatus.Text = "Idle";
-            // 
             // CheckSelectedDevice_Timer
             // 
             this.CheckSelectedDevice_Timer.Tick += new System.EventHandler(this.CheckSelectedDevice_Timer_Tick);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Location = new System.Drawing.Point(23, 124);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(230, 25);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Device Registiration";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainPage
             // 
@@ -318,7 +318,7 @@
         private System.Windows.Forms.Label MessageStatus;
         private System.Windows.Forms.ListView deviceList;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button DeviceRegisterButton;
     }
 }
 

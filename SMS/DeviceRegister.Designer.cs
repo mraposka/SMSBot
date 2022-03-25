@@ -35,7 +35,7 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.RefreshButton = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.quotaText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.deviceList = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
@@ -112,12 +112,12 @@
             this.RefreshButton.TabStop = false;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
-            // textBox1
+            // quotaText
             // 
-            this.textBox1.Location = new System.Drawing.Point(115, 190);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(152, 20);
-            this.textBox1.TabIndex = 23;
+            this.quotaText.Location = new System.Drawing.Point(115, 190);
+            this.quotaText.Name = "quotaText";
+            this.quotaText.Size = new System.Drawing.Size(152, 20);
+            this.quotaText.TabIndex = 23;
             // 
             // label1
             // 
@@ -149,7 +149,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(394, 221);
             this.Controls.Add(this.deviceList);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.quotaText);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.label2);
@@ -181,7 +181,7 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox RefreshButton;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox quotaText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListView deviceList;
     }
