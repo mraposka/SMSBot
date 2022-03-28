@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SMS
-{ 
+{
     class Variables
     {
         //Class For Global Variables And Functions
-        private string _adbPath = @"C:\Users\Win\Desktop\sdk\platform-tools\"; 
+        private string _adbPath = @"C:\Users\Win\Desktop\sdk\platform-tools\";
         private string _savedNumbersPath = @"savedNumbers.txt";
         public static string _imeiBatPath = @"getimei.bat";
         string _imeisTxtPath = @"imeis.txt";
@@ -115,10 +115,30 @@ namespace SMS
                 File.Delete(tempFileName);
             }
         }
-        public string SendMessage(string sender, string phoneNumber, string message)
+        public string GetAndroidVersion(string deviceId) {
+            Process p = new Process();
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.CreateNoWindow = false;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.Arguments = "/c "+ _adbPath + "adb.exe -s "+deviceId+" shell getprop ro.build.version.release";
+            p.Start();
+            p.WaitForExit();
+            return p.StandardOutput.ReadToEnd().Replace(" ", "\\ ").Replace("\n" ,"").Replace("\r","").Replace("\r\n", "");
+        }
+        public string SendMessage(string sender, string phoneNumber, string message, string version)
         {
             //System.Threading.Thread.Sleep(1000);
-            string command = "/c " + _adbPath + "adb.exe -s " + sender + " shell service call isms 7 i32 1 s16 \"com.android.internal.telephony.ISms\" s16 \"" + phoneNumber + "\" s16 \"null\" s16 \"" + message.Replace(" ", "\\ ") + "\" s16 \"null\" s16 \"null\"";
+            string command;
+            if (version == "10" || version == "9")
+            {
+                command = "/c " + _adbPath + "adb.exe -s " + sender + " shell service call isms 7 i32 1 s16 \"com.android.internal.telephony.ISms\" s16 \"" + phoneNumber + "\" s16 \"null\" s16 \"" + message.Replace(" ", "\\ ") + "\" s16 \"null\" s16 \"null\"";
+            }
+            else
+            {
+                command = "/c " + _adbPath + "adb.exe -s " + sender + " shell service call isms 5 i32 1 s16 \"com.android.mms.service\" s16 \"null\" s16 \"" + phoneNumber + "\" s16 \"null\" s16 \"" + message.Replace(" ", "\\ ") + "\" s16 \"null\" s16 \"null\" i32 0 i64 0";
+            }
             Process p = new Process();
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
@@ -130,11 +150,11 @@ namespace SMS
             p.WaitForExit();
             return p.StandardOutput.ReadToEnd();
         }
-        public void deleteLineFromTxt(string file,string _itemToDel)
+        public void deleteLineFromTxt(string file, string _itemToDel)
         {
             string itemToDel = _itemToDel;
             string[] lines;
-            string[] newLines; 
+            string[] newLines;
             lines = ReadTxtFile(file);
             newLines = DeleteFromArr(lines, itemToDel);
             Task thread1 = Task.Factory.StartNew(() => DelFile(file));
@@ -157,7 +177,7 @@ namespace SMS
                 streamReader.Close();
             }
             return lines;
-        } 
+        }
         public string[] DeleteFromArr(string[] arr, string del)
         {
             List<string> tempList = arr.ToList();

@@ -179,12 +179,14 @@ namespace SMS
             for (int i = 0; i < deviceId.Count; i++)
             {
                 int selectedDeviceQuota = deviceQuota[i];
+                string version = vars.GetAndroidVersion(deviceId[i]);
+                Thread.Sleep(500);
                 for (int j = 0; j < selectedDeviceQuota; j++)
                 {
                     if (numbers == process)
                     { break; }
 
-                    /*string output = vars.SendMessage(deviceId[i], NumbersListBox.Items[numbers].ToString(), MessageText.Text);
+                    string output = vars.SendMessage(deviceId[i], NumbersListBox.Items[numbers].ToString(), MessageText.Text,version);
                     if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
                     {
                         //Webe başarılı olduğu logu gönderilecek 
@@ -193,7 +195,7 @@ namespace SMS
                     else
                     {
                         //Webe başarısız olduğu logu gönderilecek
-                    }*/
+                    }
                     ++numbers;
                     --deviceQuota[i];
                 }
@@ -234,10 +236,16 @@ namespace SMS
         {
             if (deviceList.SelectedItems.Count > 0 &&  NumbersListBox.SelectedItems.Count!=0 && !String.IsNullOrEmpty(MessageText.Text))
             {
-                string output = vars.SendMessage(deviceList.SelectedItems[0].Text.Split('-')[0].Split(':')[1], NumbersListBox.SelectedItem.ToString(), MessageText.Text);
+                string version = vars.GetAndroidVersion(deviceList.SelectedItems[0].Text.Split('-')[0].Split(':')[1]);
+                Thread.Sleep(200);
+                string output = vars.SendMessage(deviceList.SelectedItems[0].Text.Split('-')[0].Split(':')[1], NumbersListBox.SelectedItem.ToString(), MessageText.Text,version);
                 if (output.Replace(Environment.NewLine, "") == "Result: Parcel(00000000    '....')")
                 {
                     MessageStatus.Text = "Message sent " + DateTime.Now.ToString("HH:mm");
+                }
+                else
+                {
+                    MessageStatus.Text = "Sending failed!";
                 }
             }
         }
